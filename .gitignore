@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+h5pxblock/public/js/samples
 develop-eggs/
 dist/
 downloads/
