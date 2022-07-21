@@ -47,4 +47,32 @@ function H5PPlayerXBlock(runtime, element, args) {
             });
         }
     });
+
+    var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
+
+    $(element).find('.save-button').bind('click', function() {
+        var form_data = new FormData();
+        var file_data = $(element).find('#h5p_file').prop('files')[0];
+
+        form_data.append('file', file_data);
+        console.log(file_data)
+
+        $.ajax({
+          url: handlerUrl,
+          dataType: 'text',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          type: "POST",
+          success: function(response){
+
+          }
+        });
+
+      });
+
+    $(element).find('.cancel-button').bind('click', function() {
+
+    });
 }
