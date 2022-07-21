@@ -26,7 +26,6 @@ from xblock.fragment import Fragment
 from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 # Make '_' a no-op so we can scrape strings
-# TODO: use i18n service
 _ = lambda text: text
 
 log = logging.getLogger(__name__)
@@ -40,7 +39,7 @@ MAX_WORKERS = getattr(settings, "THREADPOOLEXECUTOR_MAX_WORKERS", 10)
 class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin):
     """
     H5P XBlock provides ability to host and play h5p content inside open edX course.
-    It also provide ability to route xAPI event to LRS.
+    It also provides ability to route xAPI event to LRS.
     """
     player_id = String(
         display_name=_("H5P Player Id"),
@@ -109,7 +108,7 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
 
     has_author_view = True
     editable_fields = (
-        'display_name', 'show_frame', 'show_copyright', 'show_h5p', 'show_fullscreen',
+        'display_name', 'show_frame', 'show_copyright', 'show_h5p', 'show_fullscreen', 'h5p_content_json_path'
     )
 
     def resource_string(self, path):
@@ -386,8 +385,9 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
                 self.interaction_data = data_json
             except ValueError:
                 return JsonHandlerError(400, "Invalid JSON").get_response()
-        # import pdb; pdb.set_trace()
+
         return Response(json.dumps(self.interaction_data))
+
 
     @XBlock.json_handler
     def finish_handler(self, data, suffix=''):
