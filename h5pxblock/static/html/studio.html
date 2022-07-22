@@ -3,7 +3,7 @@
     <div id='h5p-{h5pblock.player_id}' class="h5p-player">
         <div class="wrapper-comp-setting">
             <label class="label setting-label" for="h5p_file">{% trans field_h5p_file.display_name %}</label>
-            <input class="input setting-input" name="h5p_file" id="h5p_file" type="file"  />
+            <input class="input setting-input" name="h5p_file" id="h5p_file" type="file" accept=".h5p"/>
         </div>
         {% if h5p_xblock.h5p_file_meta.name %}
         <span class="tip setting-help setting-input-file"><span>{% trans "Currently:" %}</span> {{ h5p_xblock.h5p_file_meta.name }}</span>

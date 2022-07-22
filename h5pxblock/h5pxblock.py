@@ -11,6 +11,7 @@ import logging
 import pkg_resources
 import shutil
 import xml.etree.ElementTree as ET
+import zipfile
 
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -159,6 +160,10 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
             h5p_file.open()
             temporary_zip.write(h5p_file.read())
             temporary_zip.close()
+
+            with zipfile.ZipFile(temporary_path, 'r') as zip_ref:
+                zip_ref.extractall(local_path)
+
             os.system("unzip {} -d {}".format(temporary_path, local_path))
             os.remove(temporary_path)
 
@@ -346,7 +351,7 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
         if hasattr(request.params["file"], "file"):
             h5p_file = request.params["file"].file
 
-            # First, save scorm file in the storage for mobile clients
+            # First, save h5p file in the storage for mobile clients
             self.h5p_file_meta["sha1"] = self.get_sha1(h5p_file)
             self.h5p_file_meta["name"] = h5p_file.name
             self.h5p_file_meta["path"] = self._file_storage_path()
