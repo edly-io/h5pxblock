@@ -117,6 +117,9 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def author_view(self, context):
+        return self.student_view(context)
+
     def _file_storage_path(self):
         """
         Get file path of storage.
@@ -151,9 +154,8 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
         os.makedirs(local_path)
 
         if hasattr(h5p_file, "temporary_file_path"):
-            os.system(
-                "unzip {} -d {}".format(h5p_file.temporary_file_path(), local_path)
-            )
+            with zipfile.ZipFile(h5p_file.temporary_file_path(), 'r') as zip_ref:
+                zip_ref.extractall(local_path)
         else:
             temporary_path = os.path.join(H5P_ROOT, h5p_file.name)
             temporary_zip = open(temporary_path, "wb")
@@ -164,7 +166,6 @@ class H5PPlayerXBlock(StudioEditableXBlockMixin, XBlock, CompletableXBlockMixin)
             with zipfile.ZipFile(temporary_path, 'r') as zip_ref:
                 zip_ref.extractall(local_path)
 
-            os.system("unzip {} -d {}".format(temporary_path, local_path))
             os.remove(temporary_path)
 
     def get_sha1(self, file_descriptor):
