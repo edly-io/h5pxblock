@@ -23,15 +23,33 @@ def package_data(pkg, roots):
 
 
 setup(
-    name='h5pxblock-xblock',
-    version='0.1',
+    name='h5p-xblock',
+    version='0.1.1',
     description='XBlock to play self hosted h5p content inside open edX',
+    long_description='This xblock provides ability to play H5P content in open edX with \
+        features like learner state persistence, completion tracking, grading and ability to store content on \
+            cloud storage e.g. AWS S3',
+    url='https://github.com/edly-io/h5pxblock',
     license='MIT',
+    author='edly',
+    author_email='hello@edly.io',
+    keywords='python edx h5p xblock',
     packages=[
         'h5pxblock',
     ],
     install_requires=[
         'XBlock',
+    ],
+    classifiers=[
+        'Development Status :: 1 - Beta',
+        'Framework :: Django',
+        'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.0',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.8',
     ],
     entry_points={
         'xblock.v1': [
