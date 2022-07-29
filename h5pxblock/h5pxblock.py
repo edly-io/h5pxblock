@@ -162,12 +162,14 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             "h5p_xblock": self,
         }
 
-    def author_view(self, context):
-        return self.student_view(context)
+    def author_view(self, context=None):
+        html = self.render_template("static/html/author_view.html", context)
+        frag = Fragment(html)
+        return frag
 
     def studio_view(self, context=None):
-        context_html = self.get_context_studio()
-        template = self.render_template("static/html/studio.html", context_html)
+        context = self.get_context_studio()
+        template = self.render_template("static/html/studio.html", context)
         frag = Fragment(template)
         frag.add_css(self.resource_string("static/css/studio.css"))
         frag.add_javascript(self.resource_string("static/js/src/studio.js"))
@@ -186,8 +188,11 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         The primary view of the H5PPlayerXBlock, shown to students
         when viewing courses.
         """
-        html = self.resource_string("static/html/h5pxblock.html")
-        frag = Fragment(html.format(h5pblock=self))
+        context = {
+            "h5pblock": self,
+        }
+        template = self.render_template("static/html/h5pxblock.html", context)
+        frag = Fragment(template)
         frag.add_javascript_url('https://cdn.jsdelivr.net/npm/h5p-standalone@3.5.1/dist/main.bundle.js')
         frag.add_javascript(self.resource_string("static/js/src/h5pxblock.js"))
         user_service = self.runtime.service(self, 'user')
