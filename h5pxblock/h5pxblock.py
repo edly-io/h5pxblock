@@ -6,6 +6,7 @@ import logging
 import pkg_resources
 
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.template import Context, Template
 from django.utils import timezone
 from webob import Response
@@ -13,10 +14,9 @@ from webob import Response
 from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
 from xblock.exceptions import JsonHandlerError
-from xblock.fields import Scope, String, Boolean, Integer, Dict, UNIQUE_ID
+from xblock.fields import Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
 from xblock.fragment import Fragment
-
-from h5pxblock.utils import str2bool, unpack_package
+from h5pxblock.utils import str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
 
 
 # Make '_' a no-op so we can scrape strings
@@ -29,6 +29,7 @@ H5P_URL = os.path.join(settings.MEDIA_URL, "h5pxblockmedia")
 
 
 @XBlock.wants('user')
+@XBlock.wants('i18n')
 class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     """
     H5P XBlock provides ability to host and play h5p content inside open edX course.
@@ -51,7 +52,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     h5p_content_json_path = String(
         display_name=_("Uploade H5P content"),
         help=_("Upload H5P content"),
-        default="/resource/h5pxblock/public/js/samples/multiple-choice-713",
         scope=Scope.settings,
     )
 
@@ -95,7 +95,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     save_freq = Integer(
         display_name=_("User content state save frequency"),
         help=_(
-            "How often current user content state should be autosaved (in seconds). Set it to zero if you don't want to save content state."
+            "How often current user content state should be autosaved (in seconds). \
+                Set it to zero if you don't want to save content state."
         ),
         default=0,
         scope=Scope.settings,
@@ -121,13 +122,31 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         return template.render(Context(context))
 
     @property
+    def store_content_on_local_fs(self):
+        return default_storage.__class__.__name__ == 'FileSystemStorage'
+
+    @property
+    def get_block_path_prefix(self):
+        # In worbench self.location is a mock object so we have to use usage_id
+        if 'Workbench' in self.runtime.__class__.__name__:
+            return str(self.scope_ids.usage_id)
+        else:
+            return os.path.join(self.location.org, self.location.course, self.location.block_id)
+
+    @property
     def h5p_content_url(self):
-        return "{}/{}".format(H5P_URL, self.scope_ids.usage_id)
+        return "{}/{}".format(H5P_URL, self.get_block_path_prefix)
 
     @property
     def local_storage_path(self):
         return os.path.join(
-            H5P_ROOT, str(self.scope_ids.usage_id)
+            H5P_ROOT, self.get_block_path_prefix
+        )
+
+    @property
+    def cloud_storage_path(self):
+        return os.path.join(
+            'h5pxblockmedia', self.get_block_path_prefix
         )
 
     def get_context_studio(self):
@@ -152,7 +171,14 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         frag = Fragment(template)
         frag.add_css(self.resource_string("static/css/studio.css"))
         frag.add_javascript(self.resource_string("static/js/src/studio.js"))
-        frag.initialize_js("H5PStudioXBlock")
+        frag.initialize_js(
+            "H5PStudioXBlock",
+            json_args={
+                "uploading_txt": self.ugettext("Uploading"),
+                "uploaded_txt": self.ugettext("Uploaded"),
+                "extracting_txt": self.ugettext("Extracting")
+            }
+        )
         return frag
 
     def student_view(self, context=None):
@@ -170,7 +196,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         frag.initialize_js(
             'H5PPlayerXBlock',
             json_args={
-                ""
                 "player_id": self.player_id,
                 "frame": self.show_frame,
                 "copyright": self.show_copyright,
@@ -216,12 +241,18 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
 
             meta_data = {
                 "name": h5p_package.name,
-                "upload_time": timezone.now(),
+                "upload_time": timezone.now().strftime(DateTime.DATETIME_FORMAT),
                 "size": h5p_package.size,
             }
             self.h5p_content_meta = meta_data
-            unpack_package(h5p_package, self.local_storage_path)
-            self.h5p_content_json_path = self.h5p_content_url
+            if self.store_content_on_local_fs:
+                unpack_package_local_path(h5p_package, self.local_storage_path)
+                self.h5p_content_json_path = self.h5p_content_url
+            else:
+                unpack_and_upload_on_cloud(
+                    h5p_package, default_storage, self.cloud_storage_path
+                )
+                self.h5p_content_json_path = default_storage.url(self.cloud_storage_path)
 
         return Response(
             json.dumps({"result": "success"}),
@@ -259,9 +290,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             charset="utf8",
         )
 
-
-    # TO-DO: change this to create the scenarios you'd like to see in the
-    # workbench while developing your XBlock.
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""

@@ -1,14 +1,22 @@
-function H5PStudioXBlock(runtime, element) {
+function H5PStudioXBlock(runtime, element, args) {
 
     var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
 
-    function setProgressBarWidth(width){
+    function calcWdith(evt){
+        var width = 0;
+        if (evt.lengthComputable) {
+            var percentComplete = evt.loaded / evt.total;
+            width = percentComplete * 100;
+        }
+        return Math.round(width);
+
+    }
+    function setProgressBarWidth(width, text){
         $('.xb-h5p-progress-bar .progress-bar', $(element))
             .prop('aria-valuenow', width)
             .css({
                 width: width + '%'
-            })
-            .text(width + '%');
+            }).text(text + '(' + width + '%)');
     }
 
     $(element).find('.save-button').bind('click', function () {
@@ -51,14 +59,18 @@ function H5PStudioXBlock(runtime, element) {
                     $('.progress-bar-container').hide();
                 }
                 var xhr = new window.XMLHttpRequest();
+                xhr.addEventListener("progress", function (evt) {
+                    setProgressBarWidth(calcWdith(evt), args.extracting_txt);
+                });
+                xhr.addEventListener("load", function (evt) {
+                    setProgressBarWidth(100, args.uploaded_txt);
+                });
                 xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        console.log(percentComplete);
-                        var width = percentComplete * 100;
-                        setProgressBarWidth(width);
-                    }
-                }, false);
+                        setProgressBarWidth(calcWdith(evt), args.uploading_txt);
+                });
+                xhr.upload.addEventListener("load", function (evt) {
+                    setProgressBarWidth(50, args.extracting_txt); // xblock handler does not support stream response
+                });
                 return xhr;
             },
 
