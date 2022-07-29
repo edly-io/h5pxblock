@@ -24,7 +24,7 @@ def package_data(pkg, roots):
 
 setup(
     name='h5p-xblock',
-    version='0.1.1',
+    version='0.1.2',
     description='XBlock to play self hosted h5p content inside open edX',
     long_description='This xblock provides ability to play H5P content in open edX with \
         features like learner state persistence, completion tracking, grading and ability to store content on \
