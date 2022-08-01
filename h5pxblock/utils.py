@@ -65,7 +65,6 @@ def unpack_and_upload_on_cloud(package, storage, path):
     """
     Unpacks a zip file and upload it on cloud storage
     """
-    path = os.path.relpath(path, settings.MEDIA_ROOT)
     if not is_zipfile(package):
         log.error('%s is not a valid zip', package.name)
         return
