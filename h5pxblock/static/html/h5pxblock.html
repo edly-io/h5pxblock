@@ -1,3 +1,7 @@
+{% if h5pblock.h5p_content_json_path %}
 <div class="h5pxblock_block">
-    <div id='h5p-{h5pblock.player_id}' class="h5p-player"></div>
+    <div id='h5p-{{h5pblock.player_id}}' class="h5p-player"></div>
 </div>
+{% else %}
+<h2>No content. Please upload H5P content.<h2>
+{% endif %}

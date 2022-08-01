@@ -39,7 +39,7 @@ function H5PStudioXBlock(runtime, element, args) {
         form_data.append('is_scorable', is_scorable);
         form_data.append('save_freq', save_freq);
 
-        if (runtime.hasOwnProperty('notify')) { //xblock workbench runtime does not have `notify` method
+        if ('notify' in runtime) { //xblock workbench runtime does not have `notify` method
             runtime.notify('save', { state: 'start' });
         }        
 
@@ -75,7 +75,7 @@ function H5PStudioXBlock(runtime, element, args) {
             },
 
             success: function (response) {
-                if (runtime.hasOwnProperty('notify')) { //xblock workbench runtime does not have `notify` method
+                if ('notify' in runtime) { //xblock workbench runtime does not have `notify` method
                     runtime.notify('save', { state: 'end' });
                 }
             }
@@ -84,7 +84,7 @@ function H5PStudioXBlock(runtime, element, args) {
     });
 
     $(element).find('.cancel-button').bind('click', function () {
-        if (runtime.hasOwnProperty('notify')) { //xblock workbench runtime does not have `notify` method
+        if ('notify' in runtime) { //xblock workbench runtime does not have `notify` method
             runtime.notify('cancel', {});
         }
     });
