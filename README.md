@@ -20,19 +20,19 @@ pip install h5p-xblock
 
 Update course advanced settings by adding `h5pxblock`
 
-![Update course advanced settings](https://github.com/edly-io/h5pxblock/tree/master/docs/images/course_advance_settings.png)
+![Update course advanced settings](https://github.com/edly-io/h5pxblock/blob/master/docs/images/course_advance_settings.png?raw=true)
 
 ### Upload H5P Content
 
 Xblock should be available in Advanced component list of course unit now. Add xblock in unit and click "Edit" button to  
 upload H5P content and configure it.
 
-![Upload and configure H5P content in Studio](https://github.com/edly-io/h5pxblock/tree/master/docs/images/upload_content.png)
+![Upload and configure H5P content in Studio](https://github.com/edly-io/h5pxblock/blob/master/docs/images/upload_content.png?raw=true)
 
 ### Publish Content
 
 Use "Preview" button to preview it or publish your content and use "View Live Version" button to see how it appears  
 on LMS
 
-![Preview H5P content in LMS](https://github.com/edly-io/h5pxblock/tree/master/docs/images/preview_content.png)
+![Preview H5P content in LMS](https://github.com/edly-io/h5pxblock/blob/master/docs/images/preview_content.png?raw=true)
 
