@@ -30,18 +30,19 @@ def delete_existing_files_cloud(storage, path):
     """
     Recusively delete all files under given path on cloud storage
     """
+    log.info("%s path is being deleted on cloud", path)
     dir_names, file_names = storage.listdir(path)
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         tracker_futures = []
         for file_name in file_names:
-            file_path = "/".join([path, file_name])
+            file_path = os.path.join(path, file_name)
             tracker_futures.append(
                 executor.submit(storage.delete, file_path)
             )
-            log.info("{} file deleted on cloud".format(file_path))
+            log.info("%s file deleted on cloud", file_path)
 
     for dir_name in dir_names:
-        dir_path = "/".join([path, dir_name])
+        dir_path = os.path.join(path, dir_name)
         delete_existing_files_cloud(storage, dir_path)
 
 

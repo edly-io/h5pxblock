@@ -3,7 +3,11 @@
 
 import os
 
+from pathlib import Path
 from setuptools import setup
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 
 def package_data(pkg, roots):
@@ -24,11 +28,10 @@ def package_data(pkg, roots):
 
 setup(
     name='h5p-xblock',
-    version='0.1.4',
+    version='0.1.5',
     description='XBlock to play self hosted h5p content inside open edX',
-    long_description='This xblock provides ability to play H5P content in open edX with \
-        features like learner state persistence, completion tracking, grading and ability to store content on \
-            cloud storage e.g. AWS S3',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/edly-io/h5pxblock',
     license='MIT',
     author='edly',
