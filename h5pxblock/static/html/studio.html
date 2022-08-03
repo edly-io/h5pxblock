@@ -18,10 +18,17 @@
             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
-      
       {% if h5p_xblock.h5p_content_meta %}
-      <div class="tip setting-help "><span>{% trans "Currently:" %}</span> {{ h5p_xblock.h5p_content_meta.name }} <span>{% trans "Upload time:" %}{{ h5p_xblock.h5p_content_meta.upload_time }}</span></div>
+      <div class="tip setting-help "><span><b>{% trans "Currently:" %}</b> {{ h5p_xblock.h5p_content_meta.name }}</span>&nbsp;<span><b>{% trans "Upload time:" %}</b> {{ h5p_xblock.h5p_content_meta.upload_time }}</span></div>
       {% endif %}
+
+      <div class="astrodivider"><div class="astrodividermask"></div><span><i>OR</i></span></div>
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="xb_display_name">{% trans 'Reuse Existing H5P Content' %}</label>
+        <input class="input setting-input text-to-copy" name="xb_existing_content_path" id="xb_existing_content_path" value="{{ h5p_xblock.h5p_content_json_path|default_if_none:'' }}" type="text" />
+        <i class="fa fa-copy copy-text"></i>
+      </div>
+      <div class="tip setting-help">{% trans 'Enter path of existing content or copy path to reuse this content in another block' %}</div>
     </li>
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
@@ -94,10 +101,10 @@
           <select class="field-data-control"
                   id="xb_field_edit_is_scorable"
                 >
-                  <option value="1" {% if h5p_xblock.is_scorable %}selected{% endif %}>
+                  <option value="1" {% if h5p_xblock.has_score %}selected{% endif %}>
                     True {% if is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
                   </option>
-                  <option value="0" {% if not h5p_xblock.is_scorable %}selected{% endif %}>
+                  <option value="0" {% if not h5p_xblock.has_score %}selected{% endif %}>
                     False {% if not is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
                   </option>
           </select>
