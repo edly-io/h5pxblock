@@ -11,6 +11,7 @@ function H5PStudioXBlock(runtime, element, args) {
         return Math.round(width);
 
     }
+
     function setProgressBarWidth(width, text){
         $('.xb-h5p-progress-bar .progress-bar', $(element))
             .prop('aria-valuenow', width)
@@ -18,6 +19,16 @@ function H5PStudioXBlock(runtime, element, args) {
                 width: width + '%'
             }).text(text + '(' + width + '%)');
     }
+
+    $('.copy-text').click(function() {
+        var copyIcon = $(this);
+        var textToCopy = copyIcon.siblings('.text-to-copy').val();
+        navigator.clipboard.writeText(textToCopy).then(
+            function() {
+                copyIcon.toggleClass('fa-copy').toggleClass('fa-check');
+            }
+        )
+    });
 
     $(element).find('.save-button').bind('click', function () {
         var form_data = new FormData();
@@ -29,6 +40,7 @@ function H5PStudioXBlock(runtime, element, args) {
         var show_fullscreen = $(element).find('#xb_field_edit_show_fullscreen').val();
         var is_scorable = $(element).find('#xb_field_edit_is_scorable').val();
         var save_freq = $(element).find('#xb_field_edit_save_freq').val();
+        var h5_content_path = $(element).find('#xb_existing_content_path').val();
 
         form_data.append('h5p_content_bundle', h5p_content_bundle);
         form_data.append('display_name', display_name);
@@ -38,6 +50,7 @@ function H5PStudioXBlock(runtime, element, args) {
         form_data.append('show_fullscreen', show_fullscreen);
         form_data.append('is_scorable', is_scorable);
         form_data.append('save_freq', save_freq);
+        form_data.append('h5_content_path', h5_content_path);
 
         if ('notify' in runtime) { //xblock workbench runtime does not have `notify` method
             runtime.notify('save', { state: 'start' });

@@ -50,7 +50,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     )
 
     h5p_content_json_path = String(
-        display_name=_("Uploade H5P content"),
+        display_name=_("Upload H5P content"),
         help=_("Upload H5P content"),
         scope=Scope.settings,
     )
@@ -83,7 +83,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.settings
     )
 
-    is_scorable = Boolean(
+    has_score = Boolean(
         display_name=_("Is Scorable"),
         help=_(
             "Select True if this component will save score"
@@ -157,7 +157,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             "show_copyright": self.fields["show_copyright"],
             "show_h5p": self.fields["show_h5p"],
             "show_fullscreen": self.fields["show_fullscreen"],
-            "is_scorable": self.fields["is_scorable"],
+            "is_scorable": self.fields["has_score"],
             "save_freq": self.fields["save_freq"],
             "h5p_xblock": self,
         }
@@ -237,9 +237,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         self.show_copyright = str2bool(request.params["show_copyright"])
         self.show_h5p = str2bool(request.params["show_h5p"])
         self.show_fullscreen = str2bool(request.params["show_fullscreen"])
-        self.is_scorable = str2bool(request.params["is_scorable"])
+        self.has_score = str2bool(request.params["is_scorable"])
         self.save_freq = request.params["save_freq"]
-        self.icon_class = "problem" if self.is_scorable else "h5p"
+        self.icon_class = "problem" if self.has_score else "h5p"
 
         if hasattr(request.params["h5p_content_bundle"], "file"):
             h5p_package = request.params["h5p_content_bundle"].file
@@ -258,6 +258,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                     h5p_package, default_storage, self.cloud_storage_path
                 )
                 self.h5p_content_json_path = default_storage.url(self.cloud_storage_path)
+        elif request.params["h5_content_path"]:
+            self.h5p_content_json_path = request.params["h5_content_path"]
 
         return Response(
             json.dumps({"result": "success"}),
