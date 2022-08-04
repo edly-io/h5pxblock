@@ -13,7 +13,6 @@ from webob import Response
 
 from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
-from xblock.exceptions import JsonHandlerError
 from xblock.fields import Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
 from xblock.fragment import Fragment
 from h5pxblock.utils import str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
@@ -102,9 +101,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.settings,
     )
 
-    interaction_data = Dict(
+    interaction_data = String(
         help=_("User previous content interaction states"),
-        default={},
+        default=None,
         scope=Scope.user_state
     )
 
@@ -193,6 +192,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         }
         template = self.render_template("static/html/h5pxblock.html", context)
         frag = Fragment(template)
+        frag.add_css(self.resource_string("static/css/student_view.css"))
         frag.add_javascript_url('https://cdn.jsdelivr.net/npm/h5p-standalone@3.5.1/dist/main.bundle.js')
         frag.add_javascript(self.resource_string("static/js/src/h5pxblock.js"))
         user_service = self.runtime.service(self, 'user')
@@ -209,7 +209,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 "saveFreq": save_freq,
                 "user_full_name": user.full_name,
                 "user_email": user.emails[0],
-                "userData": json.dumps(self.interaction_data),
+                "userData": self.interaction_data,
                 "customJsPath": self.runtime.local_resource_url(self, "public/js/h5pcustom.js"),
                 "h5pJsonPath": self.h5p_content_json_path
             }
@@ -221,14 +221,15 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         """
         Handles to retrieve and save user interactions with h5p content
         """
+        success = False
         if request.method == "POST":
             try:
-                data_json = json.loads(request.POST['data'])
-                self.interaction_data = data_json
-            except ValueError:
-                return JsonHandlerError(400, "Invalid JSON").get_response()
+                self.interaction_data = request.POST['data']
+                success = True
+            except BaseException as exp:
+                log.error("Error while saving learner interaction data: %s", exp)
 
-        return Response(json.dumps(self.interaction_data))
+        return Response(json.dumps({"success": success}))
 
     @XBlock.handler
     def studio_submit(self, request, suffix=""):
@@ -280,7 +281,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             log.error("Error while marking completion %s", exp)
 
         try:
-            if self.is_scorable and data['result'] and data['result']['score']:
+            if self.has_score and data['result'] and data['result']['score']:
                 grade_dict = {
                     'value': data['result']['score']['raw'],
                     'max_value': data['result']['score']['max'],
