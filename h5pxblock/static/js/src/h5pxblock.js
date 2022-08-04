@@ -29,7 +29,10 @@ function H5PPlayerXBlock(runtime, element, args) {
                 }
 
             }
-            return new H5PStandalone.H5P(el, options);
+            return new H5PStandalone.H5P(el, options).then(function(){ 
+                $(el).siblings('.spinner-container').find('.spinner-border').hide();
+                $(el).show();
+            });
         }
     };
 
