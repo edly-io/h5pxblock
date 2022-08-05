@@ -26,6 +26,16 @@ def delete_path(path):
         shutil.rmtree(path)
 
 
+def future_result_handler(future):
+    """
+    Prints results of future in logs
+    """
+    try:
+        log.info("Future task completed: Result:[%s]", future.result())
+    except BaseException as exp:
+        log.error("Future completed with error %s", exp)
+
+
 def delete_existing_files_cloud(storage, path):
     """
     Recusively delete all files under given path on cloud storage
@@ -33,13 +43,10 @@ def delete_existing_files_cloud(storage, path):
     log.info("%s path is being deleted on cloud", path)
     dir_names, file_names = storage.listdir(path)
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        tracker_futures = []
         for file_name in file_names:
-            file_path = os.path.join(path, file_name)
-            tracker_futures.append(
-                executor.submit(storage.delete, file_path)
-            )
-            log.info("%s file deleted on cloud", file_path)
+            file_path = os.path.join(path, file_name)            
+            future = executor.submit(storage.delete, file_path)
+            future.add_done_callback(future_result_handler)
 
     for dir_name in dir_names:
         dir_path = os.path.join(path, dir_name)
@@ -74,10 +81,8 @@ def unpack_and_upload_on_cloud(package, storage, path):
 
     with ZipFile(package, 'r') as h5p_zip:
         with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            tracker_futures = []
             for zipfile_name in h5p_zip.namelist():
                 real_path = os.path.join(path, zipfile_name)
-                log.info('Uploading file %s to cloud storage ', zipfile_name)
-                tracker_futures.append(
-                    executor.submit(storage.save, real_path, ContentFile(h5p_zip.read(zipfile_name)))
-                )
+                if not os.path.basename(real_path) in {"", ".", ".."}:  # skip invalid or dangerous paths
+                    future = executor.submit(storage.save, real_path, ContentFile(h5p_zip.read(zipfile_name)))
+                    future.add_done_callback(future_result_handler)
