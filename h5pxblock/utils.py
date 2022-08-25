@@ -44,7 +44,7 @@ def delete_existing_files_cloud(storage, path):
     dir_names, file_names = storage.listdir(path)
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         for file_name in file_names:
-            file_path = os.path.join(path, file_name)            
+            file_path = os.path.join(path, file_name)
             future = executor.submit(storage.delete, file_path)
             future.add_done_callback(future_result_handler)
 

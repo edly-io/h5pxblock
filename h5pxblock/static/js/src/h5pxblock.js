@@ -8,7 +8,7 @@ function H5PPlayerXBlock(runtime, element, args) {
     const contentxResultSaveUrl = runtime.handlerUrl(element, 'result_handler');
 
     const playerPromise = function edXH5PPlayer(el) {        
-        if (el) {
+        if (el && $(el).children('.h5p-iframe-wrapper').length == 0) {
             const userObj = { 'name': args.user_full_name, 'mail': args.user_email };
             const options = {
                 h5pJsonPath: args.h5pJsonPath,
@@ -27,7 +27,6 @@ function H5PPlayerXBlock(runtime, element, args) {
                 ajax: { 
                     contentUserDataUrl: contentUserDataUrl
                 }
-
             }
             return new H5PStandalone.H5P(el, options).then(function(){ 
                 $(el).siblings('.spinner-container').find('.spinner-border').hide();
