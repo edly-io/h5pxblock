@@ -1,0 +1,59 @@
+name: Cypress Tests using Cypress Docker Image
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches:
+    - '**'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.14.0-slim-chrome99-ff97
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: install pip
+        run: |  
+          apt update -qq
+          apt install -y python3-pip
+          pip3 --version
+
+      - name: Checkout xblock-sdk repo
+        uses: actions/checkout@v2
+        with:
+          repository: openedx/xblock-sdk
+          path: xblock-sdk
+
+      - name: Setup xblock-sdk
+        working-directory: xblock-sdk
+        run: |
+          pwd
+          pip install -qr requirements/dev.txt
+          pip install -qr requirements/local.txt
+
+      - name: setup h5p xblock
+        run: |          
+          pip install .
+
+      - name: Run xblock workbench
+        working-directory: xblock-sdk
+        env:
+          EXCLUDE_SAMPLE_XBLOCKS: yes           
+        run: |          
+          python3 manage.py migrate --noinput
+          python3 ./manage.py runserver &
+
+      - name: Sleep for 5s to wait for django server getting up and running
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: 5s
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          start: python3 ../../xblock-sdk/manage.py runserver
+          browser: chrome
+          working-directory: tests/cypress
