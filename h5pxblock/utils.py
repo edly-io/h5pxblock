@@ -9,11 +9,34 @@ import shutil
 from zipfile import is_zipfile, ZipFile
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage, get_storage_class
 
 log = logging.getLogger(__name__)
 
 
 MAX_WORKERS = getattr(settings, "THREADPOOLEXECUTOR_MAX_WORKERS", 10)
+
+
+def get_h5p_storage():
+    """
+    Returns storage for h5p content
+
+    If H5PXBLOCK_STORAGE is defined in django settings, intializes storage using the
+    specified settings. Otherwise, returns default_storage.
+    """
+    h5p_storage_settings = getattr(settings, "H5PXBLOCK_STORAGE", None)
+
+    if not h5p_storage_settings:
+        return default_storage
+
+    storage_class_import_path = h5p_storage_settings.get("storage_class", None)
+    storage_settings = h5p_storage_settings.get("settings", {})
+
+    storage_class = get_storage_class(storage_class_import_path)
+
+    storage = storage_class(**storage_settings)
+
+    return storage
 
 
 def str2bool(val):

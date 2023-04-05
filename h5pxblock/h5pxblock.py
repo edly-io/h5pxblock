@@ -6,7 +6,6 @@ import logging
 import pkg_resources
 
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.template import Context, Template
 from django.utils import timezone
 from webob import Response
@@ -15,7 +14,7 @@ from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
 from xblock.fragment import Fragment
-from h5pxblock.utils import str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
+from h5pxblock.utils import get_h5p_storage, str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
 
 
 # Make '_' a no-op so we can scrape strings
@@ -26,6 +25,7 @@ log = logging.getLogger(__name__)
 H5P_ROOT = os.path.join(settings.MEDIA_ROOT, "h5pxblockmedia")
 H5P_URL = os.path.join(settings.MEDIA_URL, "h5pxblockmedia")
 
+H5P_STORAGE = get_h5p_storage()
 
 @XBlock.wants('user')
 @XBlock.wants('i18n')
@@ -122,7 +122,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
 
     @property
     def store_content_on_local_fs(self):
-        return default_storage.__class__.__name__ == 'FileSystemStorage'
+        return H5P_STORAGE.__class__.__name__ == 'FileSystemStorage'
 
     @property
     def get_block_path_prefix(self):
@@ -256,9 +256,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 self.h5p_content_json_path = self.h5p_content_url
             else:
                 unpack_and_upload_on_cloud(
-                    h5p_package, default_storage, self.cloud_storage_path
+                    h5p_package, H5P_STORAGE, self.cloud_storage_path
                 )
-                self.h5p_content_json_path = default_storage.url(self.cloud_storage_path)
+                self.h5p_content_json_path = H5P_STORAGE.url(self.cloud_storage_path)
         elif request.params["h5_content_path"]:
             self.h5p_content_json_path = request.params["h5_content_path"]
 
