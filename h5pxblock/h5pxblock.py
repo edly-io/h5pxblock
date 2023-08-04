@@ -193,7 +193,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         template = self.render_template("static/html/h5pxblock.html", context)
         frag = Fragment(template)
         frag.add_css(self.resource_string("static/css/student_view.css"))
-        frag.add_javascript_url('https://cdn.jsdelivr.net/npm/h5p-standalone@3.5.1/dist/main.bundle.js')
+        frag.add_javascript_url('https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/main.bundle.js')
         frag.add_javascript(self.resource_string("static/js/src/h5pxblock.js"))
         user_service = self.runtime.service(self, 'user')
         user = user_service.get_current_user()
