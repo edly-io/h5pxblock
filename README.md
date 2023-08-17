@@ -4,7 +4,7 @@
 H5P Xblock provides ability to host and play H5P content in open edX. It has few more features
 
 1. Ability to mark H5P content complete in open edX
-2. Ablity to capture score of H5P content in open edX
+2. Ability to capture score of H5P content in open edX
 3. Save learner state which can be retrieved later
 4. Ability to host H5P content on cloud storage like AWS S3
 
@@ -36,3 +36,12 @@ on LMS
 
 ![Preview H5P content in LMS](https://github.com/edly-io/h5pxblock/blob/master/docs/images/preview_content.png?raw=true)
 
+
+# Working with translations
+
+You can help by translating this project. Follow the steps below:
+
+1. Create a folder for the translations in `locale/`, eg: `locale/es_419/LC_MESSAGES/`, and create your `text.po` file
+with all the translations.
+2. Run `make compile_translations`, this will generate the `text.mo` file.
+3. Create a pull request with your changes.

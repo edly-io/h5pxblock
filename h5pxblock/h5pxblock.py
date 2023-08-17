@@ -6,7 +6,6 @@ import logging
 import pkg_resources
 
 from django.conf import settings
-from django.template import Context, Template
 from django.utils import timezone
 from webob import Response
 
@@ -14,6 +13,8 @@ from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
 from xblock.fragment import Fragment
+from xblockutils.resources import ResourceLoader
+
 from h5pxblock.utils import get_h5p_storage, str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
 
 
@@ -21,6 +22,7 @@ from h5pxblock.utils import get_h5p_storage, str2bool, unpack_and_upload_on_clou
 _ = lambda text: text
 
 log = logging.getLogger(__name__)
+loader = ResourceLoader(__name__)
 
 H5P_ROOT = os.path.join(settings.MEDIA_ROOT, "h5pxblockmedia")
 H5P_URL = os.path.join(settings.MEDIA_URL, "h5pxblockmedia")
@@ -94,8 +96,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     save_freq = Integer(
         display_name=_("User content state save frequency"),
         help=_(
-            "How often current user content state should be autosaved (in seconds). \
-                Set it to zero if you don't want to save content state."
+            "How often current user content state should be autosaved (in seconds). "
+            "Set it to zero if you don't want to save content state."
         ),
         default=0,
         scope=Scope.settings,
@@ -116,9 +118,11 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         return data.decode("utf8")
 
     def render_template(self, template_path, context):
-        template_str = self.resource_string(template_path)
-        template = Template(template_str)
-        return template.render(Context(context))
+        return loader.render_django_template(
+            template_path,
+            context,
+            i18n_service=self.runtime.service(self, 'i18n'),
+        )
 
     @property
     def store_content_on_local_fs(self):
