@@ -118,6 +118,17 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         return data.decode("utf8")
 
     def render_template(self, template_path, context):
+        """
+        Render a template with the given context. The template is translated
+        according to the user's language.
+
+        Args:
+            template_path (str): The path to the template
+            context(dict, optional): The context to render in the template
+
+        Returns:
+            str: The rendered template
+        """
         return loader.render_django_template(
             template_path,
             context,
