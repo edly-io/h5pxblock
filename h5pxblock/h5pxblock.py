@@ -280,17 +280,21 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         except BaseException as exp:
             log.error("Error while marking completion %s", exp)
 
-        try:
-            if self.has_score and data['result'] and data['result']['score']:
-                grade_dict = {
-                    'value': data['result']['score']['raw'],
-                    'max_value': data['result']['score']['max'],
-                    'only_if_higher': True,
-                }
+        if self.has_score and data['result'] and data['result']['score']:
+            grade_dict = {
+                'value': data['result']['score']['raw'],
+                'max_value': data['result']['score']['max'],
+                'only_if_higher': True,
+            }
+            try:
                 self.runtime.publish(self, 'grade', grade_dict)
                 save_score = True
-        except BaseException as exp:
-            log.error("Error while publishing score %s", exp)
+            except TypeError:
+                grade_dict["only_if_higher"] = False
+                self.runtime.publish(self, 'grade', grade_dict)
+                save_score = True
+            except BaseException as exp:
+                log.error("Error while publishing score %s", exp)
 
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
