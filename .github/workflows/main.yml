@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: install pip
-        run: |  
+        run: |
           apt update -qq
           apt install -y python3-pip
           pip3 --version
@@ -34,8 +34,12 @@ jobs:
           pip install -qr requirements/dev.txt
           pip install -qr requirements/local.txt
 
+      - name: Setup dependencies
+        run: |
+          pip install xblock-utils==3.4.1
+
       - name: setup h5p xblock
-        run: |          
+        run: |
           pip install .
 
       - name: Run xblock workbench

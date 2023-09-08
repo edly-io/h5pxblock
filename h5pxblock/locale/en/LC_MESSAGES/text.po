@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Bryann Valderrama <bryann.valderrama@edunext.co>, 2023
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-17 11:22-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Bryann Valderrama <bryann.valderrama@edunext.co>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: h5pxblock.py:40
+msgid "H5P Player Id"
+msgstr ""
+
+#: h5pxblock.py:41
+msgid "Unique ID for player instance"
+msgstr ""
+
+#: h5pxblock.py:47
+msgid "Display Name"
+msgstr ""
+
+#: h5pxblock.py:48
+msgid "Display name for this module"
+msgstr ""
+
+#: h5pxblock.py:54 h5pxblock.py:55
+msgid "Upload H5P content"
+msgstr ""
+
+#: h5pxblock.py:60
+msgid "Show H5P player frame"
+msgstr ""
+
+#: h5pxblock.py:61
+msgid "whether to show H5P player frame and button"
+msgstr ""
+
+#: h5pxblock.py:67
+msgid "Show copyright button"
+msgstr ""
+
+#: h5pxblock.py:68
+msgid "whether to show copyright button"
+msgstr ""
+
+#: h5pxblock.py:74
+msgid "Show h5p icon"
+msgstr ""
+
+#: h5pxblock.py:75
+msgid "whether to show h5p icon"
+msgstr ""
+
+#: h5pxblock.py:81
+msgid "Show fullscreen button"
+msgstr ""
+
+#: h5pxblock.py:82
+msgid "whether to show fullscreen button"
+msgstr ""
+
+#: h5pxblock.py:88
+msgid "Is Scorable"
+msgstr ""
+
+#: h5pxblock.py:90
+msgid "Select True if this component will save score"
+msgstr ""
+
+#: h5pxblock.py:97
+msgid "User content state save frequency"
+msgstr ""
+
+#: h5pxblock.py:99
+msgid ""
+"How often current user content state should be autosaved (in seconds). Set "
+"it to zero if you don't want to save content state."
+msgstr ""
+
+#: h5pxblock.py:107
+msgid "User previous content interaction states"
+msgstr ""
+
+#: h5pxblock.py:182
+msgid "Uploading"
+msgstr ""
+
+#: h5pxblock.py:183
+msgid "Uploaded"
+msgstr ""
+
+#: h5pxblock.py:184
+msgid "Extracting"
+msgstr ""
+
+#: static/html/author_view.html:3
+msgid "Content can be previewed inside LMS only"
+msgstr ""
+
+#: static/html/author_view.html:4
+msgid ""
+"Please upload H5P content by clicking the \"Edit\" button if you have not "
+"already uploaded it."
+msgstr ""
+
+#: static/html/h5pxblock.html:7
+msgid "Loading..."
+msgstr ""
+
+#: static/html/h5pxblock.html:13
+msgid "No content. Please upload H5P content."
+msgstr ""
+
+#: static/html/studio.html:22
+msgid "Currently:"
+msgstr ""
+
+#: static/html/studio.html:22
+msgid "Upload time:"
+msgstr ""
+
+#: static/html/studio.html:27
+msgid "Reuse Existing H5P Content"
+msgstr ""
+
+#: static/html/studio.html:31
+msgid ""
+"Enter path of existing content or copy path to reuse this content in another "
+"block"
+msgstr ""
+
+#: static/html/studio.html:40 static/html/studio.html:57
+#: static/html/studio.html:73 static/html/studio.html:89
+#: static/html/studio.html:105
+msgid "True"
+msgstr ""
+
+#: static/html/studio.html:40 static/html/studio.html:43
+#: static/html/studio.html:57 static/html/studio.html:60
+#: static/html/studio.html:73 static/html/studio.html:76
+#: static/html/studio.html:89 static/html/studio.html:92
+#: static/html/studio.html:105 static/html/studio.html:108
+msgid "(Default)"
+msgstr ""
+
+#: static/html/studio.html:43 static/html/studio.html:60
+#: static/html/studio.html:76 static/html/studio.html:92
+#: static/html/studio.html:108
+msgid "False"
+msgstr ""
+
+#: static/html/studio.html:127
+msgid "Save"
+msgstr ""
+
+#: static/html/studio.html:130
+msgid "Cancel"
+msgstr ""

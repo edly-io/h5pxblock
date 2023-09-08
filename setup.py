@@ -59,5 +59,5 @@ setup(
             'h5pxblock = h5pxblock:H5PPlayerXBlock',
         ]
     },
-    package_data=package_data("h5pxblock", ["static", "public"]),
+    package_data=package_data("h5pxblock", ["static", "public", "translations"]),
 )

@@ -37,10 +37,10 @@
                 id="xb_field_edit_show_frame"
               >
                 <option value="1" {% if h5p_xblock.show_frame %}selected{% endif %}>
-                  True {% if show_frame.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                  {% trans "True" %}{% if show_frame.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                 </option>
                 <option value="0" {% if not h5p_xblock.show_frame %}selected{% endif %}>
-                  False {% if not show_frame.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                  {% trans "False" %}{% if not show_frame.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                 </option>
         </select>
       </div>
@@ -54,10 +54,10 @@
                   id="xb_field_edit_show_copyright"
                 >
                   <option value="1" {% if h5p_xblock.show_copyright %}selected{% endif %}>
-                    True {% if show_copyright.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "True" %}{% if show_copyright.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
                   <option value="0" {% if not h5p_xblock.show_copyright %}selected{% endif %}>
-                    False {% if not show_copyright.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "False" %}{% if not show_copyright.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
           </select>
         </div>
@@ -70,10 +70,10 @@
                   id="xb_field_edit_show_h5p"
                 >
                   <option value="1" {% if h5p_xblock.show_h5p %}selected{% endif %}>
-                    True {% if show_h5p.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "True" %}{% if show_h5p.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
                   <option value="0" {% if not h5p_xblock.show_h5p %}selected{% endif %}>
-                    False {% if not show_h5p.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "False" %}{% if not show_h5p.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
           </select>
         </div>
@@ -86,10 +86,10 @@
                   id="xb_field_edit_show_fullscreen"
                 >
                   <option value="1" {% if h5p_xblock.show_fullscreen %}selected{% endif %}>
-                    True {% if show_fullscreen.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "True" %}{% if show_fullscreen.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
                   <option value="0" {% if not h5p_xblock.show_fullscreen %}selected{% endif %}>
-                    False {% if not show_fullscreen.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "False" %}{% if not show_fullscreen.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
           </select>
         </div>
@@ -102,10 +102,10 @@
                   id="xb_field_edit_is_scorable"
                 >
                   <option value="1" {% if h5p_xblock.has_score %}selected{% endif %}>
-                    True {% if is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "True" %}{% if is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
                   <option value="0" {% if not h5p_xblock.has_score %}selected{% endif %}>
-                    False {% if not is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;(Default){% endif %}
+                    {% trans "False" %}{% if not is_scorable.default %}&nbsp;&nbsp;&nbsp;&nbsp;{% trans "(Default)" %}{% endif %}
                   </option>
           </select>
         </div>
@@ -118,7 +118,7 @@
         </div>
         <span class="tip setting-help">{% trans save_freq.help %}</span>
       </li>
-  
+
 
   </ul>
   <div class="xblock-actions">
