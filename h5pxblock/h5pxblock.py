@@ -7,7 +7,7 @@ import pkg_resources
 from enum import Enum
 
 from django.conf import settings
-from django.utils import timezone
+from datetime import datetime
 from webob import Response
 
 from xblock.completable import CompletableXBlockMixin
@@ -376,6 +376,13 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         except BaseException as exp:
             log.error("Error while marking completion %s", exp)
 
+        if self.is_past_due:
+            return Response(
+                json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
+                content_type="application/json",
+                charset="utf8",
+            )
+
         if self.has_score and data['result'] and data['result']['score']:
             raw_score = data['result']['score']['raw']
             max_score = data['result']['score']['max']
@@ -405,6 +412,15 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             content_type="application/json",
             charset="utf8",
         )
+
+    @property
+    def is_past_due(self):
+        """
+        Return True if the due date has passed.
+        """
+        if not self.due:
+            return False
+        return datetime.now() > self.due
 
     @staticmethod
     def workbench_scenarios():

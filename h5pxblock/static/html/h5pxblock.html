@@ -11,6 +11,11 @@
         </div>
     </div>
     <div id='h5p-{{h5pblock.player_id}}' class="h5p-player"></div>
+    {% if h5pblock.is_past_due %}
+    <div class='h5p-warning'>
+        <h3>{% trans "The due date for this subsection has passed. Your response will be recorded, but not graded." %}<h3>
+    </div>
+    {% endif %}
 </div>
 {% else %}
 <h2>{% trans "No content. Please upload H5P content." %}<h2>
