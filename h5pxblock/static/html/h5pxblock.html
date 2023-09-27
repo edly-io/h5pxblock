@@ -3,7 +3,7 @@
 {% if h5pblock.h5p_content_json_path %}
 <div class="h5pxblock_block">
     {% if h5pblock.has_score %}
-    <p> ({{ h5pblock.score}}/{{ h5pblock.max_score }} {% trans "points" %}) {% trans h5pblock.submission_status %}</p>
+    <p> ({{ h5pblock.raw_score}}/{{ h5pblock.max_raw_score }} {% trans "points" %}) {% trans h5pblock.submission_status %}</p>
     {% else %}
     <p> {% trans h5pblock.submission_status %}</p>
     {% endif %}

@@ -144,14 +144,14 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.user_state,
     )
 
-    score = Integer(
+    raw_score = Integer(
         display_name=_("Score"),
         help=_("The score of the assignment."),
         default=0,
         scope=Scope.user_state,
     )
 
-    max_score = Integer(
+    max_raw_score = Integer(
         display_name=_("Maximum score"),
         help=_("The maximum score of the assignment."),
         default=0,
@@ -400,8 +400,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             except BaseException as exp:
                 log.error("Error while publishing score %s", exp)
             if save_score:
-                self.score = data['result']['score']['raw']
-                self.max_score = data['result']['score']['max']
+                self.raw_score = data['result']['score']['raw']
+                self.max_raw_score = data['result']['score']['max']
         self.submission_status = SubmissionStatus.COMPLETED.value
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
