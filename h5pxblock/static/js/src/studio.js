@@ -30,6 +30,17 @@ function H5PStudioXBlock(runtime, element, args) {
         )
     });
 
+    $(element).find('.scorable').hide();
+
+    $('#xb_field_edit_is_scorable').change(function() {
+        if($(this).val() == '1') {
+            $(element).find('.scorable').show();
+        }
+        else {
+            $(element).find('.scorable').hide();
+        }
+    });
+
     $(element).find('.save-button').bind('click', function () {
         var form_data = new FormData();
         var h5p_content_bundle = $(element).find('#xb_h5p_file').prop('files')[0];
@@ -41,6 +52,8 @@ function H5PStudioXBlock(runtime, element, args) {
         var is_scorable = $(element).find('#xb_field_edit_is_scorable').val();
         var save_freq = $(element).find('#xb_field_edit_save_freq').val();
         var h5_content_path = $(element).find('#xb_existing_content_path').val();
+        var weight = $(element).find('input[name=xb_weight]').val();
+        var points = $(element).find('input[name=xb_points]').val();
 
         form_data.append('h5p_content_bundle', h5p_content_bundle);
         form_data.append('display_name', display_name);
@@ -51,6 +64,8 @@ function H5PStudioXBlock(runtime, element, args) {
         form_data.append('is_scorable', is_scorable);
         form_data.append('save_freq', save_freq);
         form_data.append('h5_content_path', h5_content_path);
+        form_data.append('weight', weight);
+        form_data.append('points', points);
 
         if ('notify' in runtime) { //xblock workbench runtime does not have `notify` method
             runtime.notify('save', { state: 'start' });
