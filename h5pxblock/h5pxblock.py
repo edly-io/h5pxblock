@@ -4,6 +4,7 @@ import json
 import os
 import logging
 import pkg_resources
+from enum import Enum
 
 from django.conf import settings
 from django.utils import timezone
@@ -29,6 +30,14 @@ H5P_ROOT = os.path.join(settings.MEDIA_ROOT, "h5pxblockmedia")
 H5P_URL = os.path.join(settings.MEDIA_URL, "h5pxblockmedia")
 
 H5P_STORAGE = get_h5p_storage()
+
+
+class SubmissionStatus(Enum):
+    """Submission options for the assignment."""
+
+    NOT_ATTEMPTED = _("Not attempted")
+    COMPLETED = _("Completed")
+
 
 @XBlock.wants('user')
 @XBlock.wants('i18n')
@@ -126,6 +135,27 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         help=_("Maximum grade score given to assignment by staff."),
         default=100,
         scope=Scope.settings,
+    )
+
+    submission_status = String(
+        display_name=_("Submission status"),
+        help=_("The submission status of the assignment."),
+        default=SubmissionStatus.NOT_ATTEMPTED.value,
+        scope=Scope.user_state,
+    )
+
+    score = Integer(
+        display_name=_("Score"),
+        help=_("The score of the assignment."),
+        default=0,
+        scope=Scope.user_state,
+    )
+
+    max_score = Integer(
+        display_name=_("Maximum score"),
+        help=_("The maximum score of the assignment."),
+        default=0,
+        scope=Scope.user_state,
     )
 
     h5p_content_meta = Dict(scope=Scope.content)
@@ -369,7 +399,10 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 save_score = True
             except BaseException as exp:
                 log.error("Error while publishing score %s", exp)
-
+            if save_score:
+                self.score = data['result']['score']['raw']
+                self.max_score = data['result']['score']['max']
+        self.submission_status = SubmissionStatus.COMPLETED.value
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
             content_type="application/json",
