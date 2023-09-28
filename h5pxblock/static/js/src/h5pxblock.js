@@ -10,7 +10,7 @@ function H5PPlayerXBlock(runtime, element, args) {
     );
     const contentxResultSaveUrl = runtime.handlerUrl(element, "result_handler");
 
-    const playerPromise = function edXH5PPlayer(el) {
+    const playerPromise = async function edXH5PPlayer(el) {
       if (el && $(el).children(".h5p-iframe-wrapper").length == 0) {
         const userObj = { name: args.user_full_name, mail: args.user_email };
         const options = {
@@ -36,12 +36,11 @@ function H5PPlayerXBlock(runtime, element, args) {
           },
         };
 
-        return new H5PStandalone.H5P(el, options).then(function () {
+        try {
+          await new H5PStandalone.H5P(el, options);
           $(el).siblings(".spinner-container").find(".spinner-border").hide();
           $(el).show();
-          if (service === "cms") {
-            return;
-          }
+
           H5P.externalDispatcher.on("xAPI", (event) => {
             let hasStatement = event && event.data && event.data.statement;
             if (!hasStatement) {
@@ -73,12 +72,20 @@ function H5PPlayerXBlock(runtime, element, args) {
                 type: "POST",
                 url: contentxResultSaveUrl,
                 data: JSON.stringify(event.data.statement),
+              })
+              .done(function () {
+                // handle fine request  here
+              })
+              .fail(function () {
+                // handle fails request here
               });
             }
-            // uncomment to see all xAPI events triggered by H5P content
-            //console.log("xAPI event: ", event);
           });
-        });
+
+          return Promise.resolve("Result successfully");
+        } catch (error) {
+          return Promise.reject(error.message);
+        }
       }
     };
 
@@ -89,24 +96,16 @@ function H5PPlayerXBlock(runtime, element, args) {
     $(function ($) {
       if (!H5PXBlockPlayersInitlized) {
         window.H5PXBlockPlayersInitlized = true;
-        window.H5PPlayerXBlockPromises.reduce(function (
-          prevPromise,
-          curPromise
-        ) {
-          return prevPromise.then(curPromise);
-        },
-        Promise.resolve());
-      }
+        Promise.all(window.H5PPlayerXBlockPromises).then((_) => {});
+      } 
     });
   }
 
   if (typeof require === "function") {
-    console.log("load CMS");
     require(["h5p"], function (H5PStandalone) {
       initH5P(H5PStandalone, "cms");
     });
   } else {
-    console.log("load LMS");
     loadJS(function () {
       initH5P(window.H5PStandalone, "lms");
     });
@@ -122,7 +121,6 @@ function loadJS(callback) {
       "https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/main.bundle.js"
     )
       .done(function () {
-        // Assign jsMind to the window object after it's loaded
         window.H5PStandalone = H5PStandalone;
         callback();
       })

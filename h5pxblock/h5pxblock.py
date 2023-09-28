@@ -251,6 +251,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         template = self.render_template("static/html/studio.html", context)
         frag = Fragment(template)
         frag.add_css(self.resource_string("static/css/studio.css"))
+        frag.add_javascript(self.resource_string("static/js/src/installRequired.js"))
         frag.add_javascript(self.resource_string("static/js/src/studio.js"))
         frag.initialize_js(
             "H5PStudioXBlock",
