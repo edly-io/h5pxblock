@@ -376,6 +376,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         try:
             self.emit_completion(1.0)
             save_completion = True
+            self.submission_status = SubmissionStatus.COMPLETED.value
         except BaseException as exp:
             log.error("Error while marking completion %s", exp)
 
@@ -402,7 +403,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             if save_score:
                 self.raw_score = data['result']['score']['raw']
                 self.max_raw_score = data['result']['score']['max']
-        self.submission_status = SubmissionStatus.COMPLETED.value
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
             content_type="application/json",
