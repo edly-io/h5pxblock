@@ -4,6 +4,7 @@
 <div class="h5pxblock_block">
     {% if h5pblock.has_score %}
     <p> ({{ h5pblock.raw_score}}/{{ h5pblock.max_raw_score }} {% trans "points" %}) {% trans h5pblock.submission_status %}</p>
+    {% endif %}
     <div class="d-flex justify-content-center spinner-container">
         <div class="spinner-border" role="status">
             <span class="sr-only">{% trans "Loading..." %}</span>
