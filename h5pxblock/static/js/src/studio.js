@@ -30,7 +30,11 @@ function H5PStudioXBlock(runtime, element, args) {
         )
     });
 
-    $(element).find('.scorable').hide();
+    if ($('#xb_field_edit_is_scorable').val() == '1'){
+        $(element).find('.scorable').show();
+    }else{
+        $(element).find('.scorable').hide();
+    }
 
     $('#xb_field_edit_is_scorable').change(function() {
         if($(this).val() == '1') {
