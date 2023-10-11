@@ -144,7 +144,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             "the value is not set, the problem is worth one point."
         ),
         scope=Scope.user_state,
-        default=1.0,
+        default=0,
     )
 
     submission_status = String(
