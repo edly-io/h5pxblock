@@ -137,24 +137,20 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.settings,
     )
 
+    weighted_score = Float(
+        display_name=_("Problem weighted score"),
+        help=_(
+            "Defines the weighted score of this problem. If "
+            "the value is not set, the problem is worth one point."
+        ),
+        scope=Scope.user_state,
+        default=1.0,
+    )
+
     submission_status = String(
         display_name=_("Submission status"),
         help=_("The submission status of the assignment."),
         default=SubmissionStatus.NOT_ATTEMPTED.value,
-        scope=Scope.user_state,
-    )
-
-    raw_score = Integer(
-        display_name=_("Score"),
-        help=_("The score of the assignment."),
-        default=0,
-        scope=Scope.user_state,
-    )
-
-    max_raw_score = Integer(
-        display_name=_("Maximum score"),
-        help=_("The maximum score of the assignment."),
-        default=0,
         scope=Scope.user_state,
     )
 
@@ -183,7 +179,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             context,
             i18n_service=self.runtime.service(self, 'i18n'),
         )
-    
+
     def max_score(self):
         return self.points
 
@@ -401,9 +397,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             except BaseException as exp:
                 log.error("Error while publishing score %s", exp)
 
-            if save_score and data['result']['score']['raw'] > self.raw_score:
-                self.raw_score = data['result']['score']['raw']
-                self.max_raw_score = data['result']['score']['max']
+            if save_score and score > self.weighted_score:
+                self.weighted_score = score
+
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
             content_type="application/json",
