@@ -1,24 +1,38 @@
 """XBlock to play H5P content in open edX."""
 
 import json
-import os
 import logging
+import os
+
 import pkg_resources
 from enum import Enum
 
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 from webob import Response
-
 from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
 from xblock.exceptions import JsonHandlerError
-from xblock.fields import Float, Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
+from xblock.fields import (
+    UNIQUE_ID,
+    Boolean,
+    DateTime,
+    Dict,
+    Float,
+    Integer,
+    Scope,
+    String,
+)
 from xblock.fragment import Fragment
 from xblockutils.resources import ResourceLoader
 
-from h5pxblock.utils import get_h5p_storage, str2bool, unpack_and_upload_on_cloud, unpack_package_local_path
-
+from h5pxblock.utils import (
+    get_h5p_storage,
+    str2bool,
+    unpack_and_upload_on_cloud,
+    unpack_package_local_path,
+    utcnow,
+)
 
 # Make '_' a no-op so we can scrape strings
 _ = lambda text: text
@@ -420,7 +434,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         """
         if not self.due:
             return False
-        return datetime.now() > self.due
+        return utcnow() > self.due
 
     @staticmethod
     def workbench_scenarios():
