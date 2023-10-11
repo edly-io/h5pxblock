@@ -11,7 +11,8 @@ from webob import Response
 
 from xblock.completable import CompletableXBlockMixin
 from xblock.core import XBlock
-from xblock.fields import Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
+from xblock.exceptions import JsonHandlerError
+from xblock.fields import Float, Scope, String, Boolean, Integer, Dict, DateTime, UNIQUE_ID
 from xblock.fragment import Fragment
 from xblockutils.resources import ResourceLoader
 
@@ -109,6 +110,24 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.user_state
     )
 
+    weight = Float(
+        display_name=_("Problem Weight"),
+        help=_(
+            "Defines the number of points this problem is worth. If "
+            "the value is not set, the problem is worth one point."
+        ),
+        values={"min": 0, "step": 0.1},
+        scope=Scope.settings,
+        default=1.0,
+    )
+
+    points = Integer(
+        display_name=_("Maximum score"),
+        help=_("Maximum grade score given to assignment by staff."),
+        default=100,
+        scope=Scope.settings,
+    )
+
     h5p_content_meta = Dict(scope=Scope.content)
     has_author_view = True
 
@@ -134,6 +153,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             context,
             i18n_service=self.runtime.service(self, 'i18n'),
         )
+    
+    def max_score(self):
+        return self.points
 
     @property
     def store_content_on_local_fs(self):
@@ -173,6 +195,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             "show_fullscreen": self.fields["show_fullscreen"],
             "is_scorable": self.fields["has_score"],
             "save_freq": self.fields["save_freq"],
+            "weight": self.fields["weight"],
+            "points": self.fields["points"],
             "h5p_xblock": self,
         }
 
@@ -256,6 +280,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         self.has_score = str2bool(request.params["is_scorable"])
         self.save_freq = request.params["save_freq"]
         self.icon_class = "problem" if self.has_score else "h5p"
+        points = request.params["points"]
+        weight = request.params["weight"]
+        self.points, self.weight = self.validate_score(points, weight)
 
         if hasattr(request.params["h5p_content_bundle"], "file"):
             h5p_package = request.params["h5p_content_bundle"].file
@@ -283,6 +310,33 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             charset="utf8",
         )
 
+    @staticmethod
+    def validate_score(points: int, weight: int) -> None:
+        """
+        Validate a score.
+
+        Args:
+            score (int): The score to validate.
+            max_score (int): The maximum score.
+        """
+        try:
+            points = int(points)
+        except ValueError as exc:
+            raise JsonHandlerError(400, "Points must be an integer") from exc
+
+        if points < 0:
+            raise JsonHandlerError(400, "Points must be a positive integer")
+
+        if weight:
+            try:
+                weight = float(weight)
+            except ValueError as exc:
+                raise JsonHandlerError(400, "Weight must be a decimal number") from exc
+            if weight < 0:
+                raise JsonHandlerError(400, "Weight must be a positive decimal number")
+
+        return points, weight
+
     @XBlock.json_handler
     def result_handler(self, data, suffix=''):
         """
@@ -296,9 +350,14 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             log.error("Error while marking completion %s", exp)
 
         if self.has_score and data['result'] and data['result']['score']:
+            raw_score = data['result']['score']['raw']
+            max_score = data['result']['score']['max']
+            score = 0
+            if max_score:
+                score = raw_score/max_score * self.points
             grade_dict = {
-                'value': data['result']['score']['raw'],
-                'max_value': data['result']['score']['max'],
+                'value': score,
+                'max_value': self.points,
                 'only_if_higher': True,
             }
             try:

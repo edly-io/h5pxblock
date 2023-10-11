@@ -111,6 +111,20 @@
         </div>
         <span class="tip setting-help">{% trans is_scorable.help %}</span>
       </li>
+      <li class="field comp-setting-entry is-set scorable">
+        <div class="wrapper-comp-setting">
+          <label class="label setting-label" for="xb_weight">{% trans weight.display_name %}</label>
+          <input class="input setting-input" name="xb_weight" id="xb_weight" value="{{ h5p_xblock.weight }}" type="text" />
+        </div>
+        <span class="tip setting-help">{% trans weight.help %}</span>
+      </li>
+      <li class="field comp-setting-entry is-set scorable">
+        <div class="wrapper-comp-setting">
+          <label class="label setting-label" for="xb_points">{% trans points.display_name %}</label>
+          <input class="input setting-input" name="xb_points" id="xb_points" value="{{ h5p_xblock.points }}" type="text" />
+        </div>
+        <span class="tip setting-help">{% trans points.help %}</span>
+      </li>
       <li class="field comp-setting-entry is-set">
         <div class="wrapper-comp-setting">
           <label class="label setting-label" for="xb_field_edit_save_freq">{% trans save_freq.display_name %}</label>
