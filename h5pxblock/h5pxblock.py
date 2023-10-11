@@ -400,7 +400,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 save_score = True
             except BaseException as exp:
                 log.error("Error while publishing score %s", exp)
-            if save_score:
+
+            if save_score and data['result']['score']['raw'] > self.raw_score:
                 self.raw_score = data['result']['score']['raw']
                 self.max_raw_score = data['result']['score']['max']
         return Response(
