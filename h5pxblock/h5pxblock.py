@@ -350,8 +350,13 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             log.error("Error while marking completion %s", exp)
 
         if self.has_score and data['result'] and data['result']['score']:
+            raw_score = data['result']['score']['raw']
+            max_score = data['result']['score']['max']
+            score = 0
+            if max_score:
+                score = raw_score/max_score * self.points
             grade_dict = {
-                'value': data['result']['score']['raw']/data['result']['score']['max'] * self.points,
+                'value': score,
                 'max_value': self.points,
                 'only_if_higher': True,
             }
