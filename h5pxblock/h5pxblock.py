@@ -170,7 +170,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     )
 
     h5p_content_meta = Dict(scope=Scope.content)
-    #has_author_view = True
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -241,11 +240,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             "h5p_xblock": self,
         }
 
-    #def author_view(self, context=None):
-    #    html = self.render_template("static/html/author_view.html", context)
-    #    frag = Fragment(html)
-    #    return frag
-
     def studio_view(self, context=None):
         context = self.get_context_studio()
         template = self.render_template("static/html/studio.html", context)
@@ -275,7 +269,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         frag = Fragment(template)
         frag.add_css(self.resource_string("static/css/student_view.css"))
         frag.add_javascript(self.resource_string("static/js/src/installRequired.js"))
-        #frag.add_javascript_url('https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/main.bundle.js')
         frag.add_javascript(self.resource_string("static/js/src/h5pxblock.js"))
         user_service = self.runtime.service(self, 'user')
         user = user_service.get_current_user()
