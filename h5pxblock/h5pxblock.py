@@ -4,6 +4,7 @@ import json
 import os
 import logging
 import pkg_resources
+from enum import Enum
 
 from django.conf import settings
 from django.utils import timezone
@@ -29,6 +30,14 @@ H5P_ROOT = os.path.join(settings.MEDIA_ROOT, "h5pxblockmedia")
 H5P_URL = os.path.join(settings.MEDIA_URL, "h5pxblockmedia")
 
 H5P_STORAGE = get_h5p_storage()
+
+
+class SubmissionStatus(Enum):
+    """Submission options for the assignment."""
+
+    NOT_ATTEMPTED = _("Not attempted")
+    COMPLETED = _("Completed")
+
 
 @XBlock.wants('user')
 @XBlock.wants('i18n')
@@ -128,6 +137,23 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         scope=Scope.settings,
     )
 
+    weighted_score = Float(
+        display_name=_("Problem weighted score"),
+        help=_(
+            "Defines the weighted score of this problem. If "
+            "the value is not set, the problem is worth one point."
+        ),
+        scope=Scope.user_state,
+        default=0,
+    )
+
+    submission_status = String(
+        display_name=_("Submission status"),
+        help=_("The submission status of the assignment."),
+        default=SubmissionStatus.NOT_ATTEMPTED.value,
+        scope=Scope.user_state,
+    )
+
     h5p_content_meta = Dict(scope=Scope.content)
     has_author_view = True
 
@@ -153,7 +179,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             context,
             i18n_service=self.runtime.service(self, 'i18n'),
         )
-    
+
     def max_score(self):
         return self.points
 
@@ -346,6 +372,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         try:
             self.emit_completion(1.0)
             save_completion = True
+            self.submission_status = SubmissionStatus.COMPLETED.value
         except BaseException as exp:
             log.error("Error while marking completion %s", exp)
 
@@ -369,6 +396,9 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 save_score = True
             except BaseException as exp:
                 log.error("Error while publishing score %s", exp)
+
+            if save_score and score > self.weighted_score:
+                self.weighted_score = score
 
         return Response(
             json.dumps({"result": {"save_completion": save_completion, "save_score": save_score}}),
