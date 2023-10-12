@@ -8,7 +8,6 @@ import shutil
 from datetime import datetime
 from zipfile import ZipFile, is_zipfile
 
-import pytz
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage, get_storage_class
@@ -120,4 +119,4 @@ def utcnow():
     Returns:
         datetime.datetime: Current date and time in UTC.
     """
-    return datetime.now(tz=pytz.utc)
+    return datetime.now()
