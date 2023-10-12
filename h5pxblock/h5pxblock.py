@@ -7,6 +7,8 @@ import os
 import pkg_resources
 from enum import Enum
 
+from datetime import datetime
+
 from django.conf import settings
 from django.utils import timezone
 from webob import Response
@@ -31,7 +33,6 @@ from h5pxblock.utils import (
     str2bool,
     unpack_and_upload_on_cloud,
     unpack_package_local_path,
-    utcnow,
 )
 
 # Make '_' a no-op so we can scrape strings
@@ -434,7 +435,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         """
         if not self.due:
             return False
-        return utcnow() > self.due
+        return datetime.now() > self.due
 
     @staticmethod
     def workbench_scenarios():

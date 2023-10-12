@@ -5,7 +5,6 @@ import concurrent.futures
 import logging
 import os
 import shutil
-from datetime import datetime
 from zipfile import ZipFile, is_zipfile
 
 from django.conf import settings
@@ -110,13 +109,3 @@ def unpack_and_upload_on_cloud(package, storage, path):
                 if not os.path.basename(real_path) in {"", ".", ".."}:  # skip invalid or dangerous paths
                     future = executor.submit(storage.save, real_path, ContentFile(h5p_zip.read(zipfile_name)))
                     future.add_done_callback(future_result_handler)
-
-
-def utcnow():
-    """
-    Get current date and time in UTC.
-
-    Returns:
-        datetime.datetime: Current date and time in UTC.
-    """
-    return datetime.now()
