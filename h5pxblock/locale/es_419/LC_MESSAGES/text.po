@@ -21,71 +21,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: h5pxblock.py:40
+#: h5pxblock.py:41
 msgid "H5P Player Id"
 msgstr "ID del reproductor H5P"
 
-#: h5pxblock.py:41
+#: h5pxblock.py:42
 msgid "Unique ID for player instance"
 msgstr "ID único para la instancia del reproductor"
 
-#: h5pxblock.py:47
+#: h5pxblock.py:48
 msgid "Display Name"
 msgstr "Nombre para mostrar"
 
-#: h5pxblock.py:48
+#: h5pxblock.py:49
 msgid "Display name for this module"
 msgstr "Nombre para mostrar para este módulo"
 
-#: h5pxblock.py:54 h5pxblock.py:55
+#: h5pxblock.py:55 h5pxblock.py:56
 msgid "Upload H5P content"
 msgstr "Subir contenido H5P"
 
-#: h5pxblock.py:60
+#: h5pxblock.py:61
 msgid "Show H5P player frame"
 msgstr "Mostrar marco del reproductor H5P"
 
-#: h5pxblock.py:61
+#: h5pxblock.py:62
 msgid "whether to show H5P player frame and button"
 msgstr "Si se debe mostrar el marco y el botón del reproductor H5P"
 
-#: h5pxblock.py:67
+#: h5pxblock.py:68
 msgid "Show copyright button"
 msgstr "Mostrar botón de derechos de autor"
 
-#: h5pxblock.py:68
+#: h5pxblock.py:69
 msgid "whether to show copyright button"
 msgstr "Si se debe mostrar el botón de derechos de autor"
 
-#: h5pxblock.py:74
+#: h5pxblock.py:75
 msgid "Show h5p icon"
 msgstr "Mostrar icono h5p"
 
-#: h5pxblock.py:75
+#: h5pxblock.py:76
 msgid "whether to show h5p icon"
 msgstr "Si se debe mostrar el icono h5p"
 
-#: h5pxblock.py:81
+#: h5pxblock.py:82
 msgid "Show fullscreen button"
 msgstr "Mostrar botón de pantalla completa"
 
-#: h5pxblock.py:82
+#: h5pxblock.py:83
 msgid "whether to show fullscreen button"
 msgstr "Si se debe mostrar el botón de pantalla completa"
 
-#: h5pxblock.py:88
+#: h5pxblock.py:89
 msgid "Is Scorable"
 msgstr "¿Es puntuable?"
 
-#: h5pxblock.py:90
+#: h5pxblock.py:91
 msgid "Select True if this component will save score"
 msgstr "Seleccione Verdadero si este componente guardará la puntuación"
 
-#: h5pxblock.py:97
+#: h5pxblock.py:98
 msgid "User content state save frequency"
 msgstr "Frecuencia de guardado del estado del contenido del usuario"
 
-#: h5pxblock.py:99
+#: h5pxblock.py:100
 msgid ""
 "How often current user content state should be autosaved (in seconds). Set "
 "it to zero if you don't want to save content state."
@@ -94,19 +94,39 @@ msgstr ""
 "contenido del usuario (en segundos). Establézcalo en cero si no desea "
 "guardar el estado del contenido."
 
-#: h5pxblock.py:107
+#: h5pxblock.py:108
 msgid "User previous content interaction states"
 msgstr "Estados previos de interacción del contenido por parte del usuario"
 
-#: h5pxblock.py:182
+#: h5pxblock.py:114
+msgid "Problem Weight"
+msgstr "Peso del problema"
+
+#: h5pxblock.py:116
+msgid ""
+"Defines the number of points this problem is worth. If the value is not set, "
+"the problem is worth one point."
+msgstr ""
+"Define el número de puntos que vale este problema. Si no se establece el "
+"valor, el problema vale un punto."
+
+#: h5pxblock.py:125
+msgid "Maximum score"
+msgstr "Puntaje máximo"
+
+#: h5pxblock.py:126
+msgid "Maximum grade score given to assignment by staff."
+msgstr "Calificación máxima dada a la tarea por el instructor."
+
+#: h5pxblock.py:217
 msgid "Uploading"
 msgstr "Subiendo"
 
-#: h5pxblock.py:183
+#: h5pxblock.py:218
 msgid "Uploaded"
 msgstr "Subido"
 
-#: h5pxblock.py:184
+#: h5pxblock.py:219
 msgid "Extracting"
 msgstr "Extrayendo"
 
@@ -127,6 +147,14 @@ msgid "Loading..."
 msgstr "Cargando..."
 
 #: static/html/h5pxblock.html:13
+msgid ""
+"The due date for this subsection has passed. Your response will be recorded, "
+"but not graded."
+msgstr ""
+"La fecha de vencimiento de esta subsección ha pasado. Su respuesta será "
+"registrada, pero no calificada."
+
+#: static/html/h5pxblock.html:18
 msgid "No content. Please upload H5P content."
 msgstr "No hay contenido. Por favor, suba contenido de H5P."
 
@@ -170,10 +198,10 @@ msgstr "(Predeterminado)"
 msgid "False"
 msgstr "Falso"
 
-#: static/html/studio.html:127
+#: static/html/studio.html:141
 msgid "Save"
 msgstr "Guardar"
 
-#: static/html/studio.html:130
+#: static/html/studio.html:144
 msgid "Cancel"
 msgstr "Cancelar"

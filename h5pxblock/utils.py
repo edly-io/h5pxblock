@@ -5,8 +5,8 @@ import concurrent.futures
 import logging
 import os
 import shutil
+from zipfile import ZipFile, is_zipfile
 
-from zipfile import is_zipfile, ZipFile
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage, get_storage_class
