@@ -368,6 +368,8 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         if points < 0:
             raise JsonHandlerError(400, "Points must be a positive integer")
 
+        weight = weight.replace(",", ".")
+
         if weight:
             try:
                 weight = float(weight)
