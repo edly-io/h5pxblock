@@ -105,16 +105,6 @@ msgstr "تم الرفع"
 msgid "Extracting"
 msgstr "جاري الاستخلاص"
 
-#: static/html/author_view.html:3
-msgid "Content can be previewed inside LMS only"
-msgstr "يمكن معاينة المحتوى داخل نظام إدارة التعلم (LMS ) فقط"
-
-#: static/html/author_view.html:4
-msgid ""
-"Please upload H5P content by clicking the \"Edit\" button if you have not "
-"already uploaded it."
-msgstr "يرجى رفع محتوى H5P بالنقر فوق الزر \"تحرير\" إذا لم تقم بتحميله بالفعل."
-
 #: static/html/h5pxblock.html:7
 msgid "Loading..."
 msgstr "جاري التحميل ..."

@@ -125,16 +125,6 @@ msgstr ""
 msgid "Extracting"
 msgstr ""
 
-#: static/html/author_view.html:3
-msgid "Content can be previewed inside LMS only"
-msgstr ""
-
-#: static/html/author_view.html:4
-msgid ""
-"Please upload H5P content by clicking the \"Edit\" button if you have not "
-"already uploaded it."
-msgstr ""
-
 #: static/html/h5pxblock.html:7
 msgid "Loading..."
 msgstr ""
