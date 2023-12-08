@@ -28,7 +28,7 @@ def package_data(pkg, roots):
 
 setup(
     name='h5p-xblock',
-    version='0.2.8',
+    version='0.2.9',
     description='XBlock to play self hosted h5p content inside open edX',
     long_description=long_description,
     long_description_content_type='text/markdown',
