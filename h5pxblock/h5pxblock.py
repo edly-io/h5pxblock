@@ -4,7 +4,7 @@ import json
 import logging
 import os
 
-import pkg_resources
+import importlib_resources
 from enum import Enum
 
 from datetime import datetime
@@ -173,7 +173,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = pkg_resources.resource_string(__name__, path)
+        data = importlib_resources.files(__name__).joinpath(path).read_bytes()
         return data.decode("utf8")
 
     def render_template(self, template_path, context):
