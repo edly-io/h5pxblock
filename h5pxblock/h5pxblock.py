@@ -25,8 +25,11 @@ from xblock.fields import (
     Scope,
     String,
 )
-from xblock.fragment import Fragment
-from xblockutils.resources import ResourceLoader
+from web_fragments.fragment import Fragment
+try:
+    from xblock.utils.resources import ResourceLoader
+except ModuleNotFoundError:  # For backward compatibility with releases older than Quince.
+    from xblockutils.resources import ResourceLoader
 
 from h5pxblock.utils import (
     get_h5p_storage,
