@@ -37,6 +37,8 @@ jobs:
       - name: Setup dependencies
         run: |
           pip install xblock-utils==3.4.1 importlib-resources==6.1.1
+          # TODO: Remove importlib-resources dependency once PR https://github.com/openedx/xblock-sdk/pull/350 is merged, 
+          # which automatically adds the importlib package. Expected to be merged after the Redwood release.
 
       - name: setup h5p xblock
         run: |
