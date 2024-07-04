@@ -4,7 +4,6 @@ import json
 import logging
 import os
 
-import importlib_resources
 from enum import Enum
 
 from datetime import datetime
@@ -30,6 +29,14 @@ try:
     from xblock.utils.resources import ResourceLoader
 except ModuleNotFoundError:  # For backward compatibility with releases older than Quince.
     from xblockutils.resources import ResourceLoader
+try:
+    # Older Open edX releases (Redwood and earlier) install a backported version of
+    # importlib.resources: https://pypi.org/project/importlib-resources/
+    import importlib_resources
+except ModuleNotFoundError:
+    # Starting with Sumac, Open edX drops importlib-resources in favor of the standard library:
+    # https://docs.python.org/3/library/importlib.resources.html#module-importlib.resources
+    from importlib import resources as importlib_resources
 
 from h5pxblock.utils import (
     get_h5p_storage,
