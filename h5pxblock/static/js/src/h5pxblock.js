@@ -16,9 +16,9 @@ function H5PPlayerXBlock(runtime, element, args) {
         const options = {
           h5pJsonPath: args.h5pJsonPath,
           frameJs:
-            "https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/frame.bundle.js",
+            "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/frame.bundle.js",
           frameCss:
-            "https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/styles/h5p.css",
+            "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/styles/h5p.css",
           frame: args.frame,
           copyright: args.copyright,
           icon: args.icon,
@@ -118,7 +118,7 @@ function loadJS(callback) {
   } else {
     // Load jsMind dynamically using $.getScript
     $.getScript(
-      "https://cdn.jsdelivr.net/npm/h5p-standalone@3.6.0/dist/main.bundle.js"
+      "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/main.bundle.js"
     )
       .done(function () {
         window.H5PStandalone = H5PStandalone;
