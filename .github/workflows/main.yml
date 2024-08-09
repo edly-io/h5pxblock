@@ -40,7 +40,7 @@ jobs:
 
       - name: setup h5p xblock
         run: |
-          pip install .
+          python -m pip install .
 
       - name: Run xblock workbench
         working-directory: xblock-sdk
