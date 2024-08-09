@@ -15,24 +15,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install pip
-        run: |
-          apt update -qq
-          apt install -y python3-pip
-          pip3 --version
-
       - name: Checkout xblock-sdk repo
         uses: actions/checkout@v2
         with:
           repository: openedx/xblock-sdk
           path: xblock-sdk
-
+      - uses: actions/setup-python@v5
+        id: setup_python
+        with:
+          python-version: '3.12'
       - name: Setup xblock-sdk
         working-directory: xblock-sdk
         run: |
-          pwd
-          pip install -qr requirements/dev.txt
-          pip install -qr requirements/local.txt
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install -qr requirements/dev.txt
+          python -m pip install -qr requirements/local.txt
 
       - name: Setup dependencies
         run: |
