@@ -24,14 +24,12 @@ jobs:
         id: setup_python
         with:
           python-version: '3.12'
-      - name: Setup xblock-sdk
-        working-directory: xblock-sdk
+      - name: Setup python virtual env
         run: |
           python -m venv .venv
       - name: activate venv
-        working-directory: xblock-sdk
         run: .venv/bin/activate
-      - name: install dependencies
+      - name: install dependencies of xblock-sdk
         working-directory: xblock-sdk
         run: |
           python -m pip install xblock-utils==4.0.0
