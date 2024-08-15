@@ -27,26 +27,26 @@ jobs:
       - name: Setup python virtual env
         run: |
           python -m venv .venv
-      - name: activate venv
-        run: .venv/bin/activate
+#      - name: activate venv
+#        run: .venv/bin/activate
       - name: install dependencies of xblock-sdk
         working-directory: xblock-sdk
         run: |
-          python -m pip install xblock-utils==4.0.0
-          python -m pip install -qr requirements/dev.txt
-          python -m pip install -qr requirements/local.txt
+          .venv/bin/python -m pip install xblock-utils==4.0.0
+          .venv/bin/python -m pip install -qr requirements/dev.txt
+          .venv/bin/python -m pip install -qr requirements/local.txt
 
       - name: setup h5p xblock
         run: |
-          python -m pip install .
+          .venv/bin/python -m pip install .
 
       - name: Run xblock workbench
         working-directory: xblock-sdk
         env:
           EXCLUDE_SAMPLE_XBLOCKS: yes           
         run: |          
-          python3 manage.py migrate --noinput
-          python3 ./manage.py runserver &
+          .venv/bin/python manage.py migrate --noinput
+          .venv/bin/python ./manage.py runserver &
 
       - name: Sleep for 5s to wait for django server getting up and running
         uses: juliangruber/sleep-action@v1
@@ -56,6 +56,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: python3 ../../xblock-sdk/manage.py runserver
+#          start: python3 ../../xblock-sdk/manage.py runserver
           browser: chrome
           working-directory: tests/cypress
