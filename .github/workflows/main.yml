@@ -51,6 +51,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-#          start: python3 ../../xblock-sdk/manage.py runserver
           browser: chrome
           working-directory: tests/cypress
