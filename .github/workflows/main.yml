@@ -24,29 +24,24 @@ jobs:
         id: setup_python
         with:
           python-version: '3.12'
-      - name: Setup python virtual env
-        run: |
-          python -m venv .venv
-#      - name: activate venv
-#        run: .venv/bin/activate
       - name: install dependencies of xblock-sdk
         working-directory: xblock-sdk
         run: |
-          .venv/bin/python -m pip install xblock-utils==4.0.0
-          .venv/bin/python -m pip install -qr requirements/dev.txt
-          .venv/bin/python -m pip install -qr requirements/local.txt
+          python3 -m pip install xblock-utils==4.0.0
+          python3 -m pip install -qr requirements/dev.txt
+          python3 -m pip install -qr requirements/local.txt
 
       - name: setup h5p xblock
         run: |
-          .venv/bin/python -m pip install .
+          python3 -m pip install .
 
       - name: Run xblock workbench
         working-directory: xblock-sdk
         env:
           EXCLUDE_SAMPLE_XBLOCKS: yes           
         run: |          
-          .venv/bin/python manage.py migrate --noinput
-          .venv/bin/python ./manage.py runserver &
+          python3 manage.py migrate --noinput
+          python3 ./manage.py runserver &
 
       - name: Sleep for 5s to wait for django server getting up and running
         uses: juliangruber/sleep-action@v1
