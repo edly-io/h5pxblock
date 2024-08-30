@@ -58,7 +58,8 @@ function H5PPlayerXBlock(runtime, element, args) {
 
             let isCompleted =
               statement.verb.display["en-US"] === "answered" ||
-              statement.verb.display["en-US"] === "completed";
+              statement.verb.display["en-US"] === "completed" ||
+              statement.verb.display["en-US"] === "consumed";
             let isChild =
               statement.context &&
               statement.context.contextActivities &&
