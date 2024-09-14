@@ -36,6 +36,23 @@ on LMS
 
 ![Preview H5P content in LMS](https://github.com/edly-io/h5pxblock/blob/master/docs/images/preview_content.png?raw=true)
 
+### Configuring S3 as a Storage Backend
+
+H5P relies on ``DEFAULT_FILE_STORAGE`` setting to stores h5p content. In case of S3 storage, make sure your platform level S3 storage settings are set appropriately. If you either have set ``AWS_QUERYSTRING_AUTH = True`` then you have to set custom S3 storage settings for H5P xblock since singed url are not supported or if you want to store H5P content in a separate S3 bucket instead of default one you have to set custom S3 storage settings too.
+
+Here is the required configuration:
+
+```python
+H5PXBLOCK_STORAGE = {
+    "storage_class": "storages.backends.s3boto3.S3Boto3Storage",
+    "settings": {
+        "bucket_name": "my-s3-public-bucket",
+        "querystring_auth": False,
+    },
+}
+```
+
+Please ensure that your bucket is publicly accessible to enable seamless content storage and retrieval via S3.
 
 # Working with translations
 
