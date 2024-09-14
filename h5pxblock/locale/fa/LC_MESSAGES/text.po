@@ -1,0 +1,216 @@
+# H5P XBlock translations.
+# Copyright (C) 2024 edly
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Emad Rad <codewithemad@gmail.com>, 2024
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-16 12:00+0330\n"
+"PO-Revision-Date: 2024-08-16 12:30+0330\n"
+"Last-Translator: Emad Rad <codewithemad@gmail.com>\n"
+"Language-Team: Persian <LL@li.org>\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: h5pxblock.py:63
+msgid "Not attempted"
+msgstr "تلاش نشده"
+
+#: h5pxblock.py:64
+msgid "Completed"
+msgstr "تکمیل شد"
+
+#: h5pxblock.py:75
+msgid "H5P Player Id"
+msgstr "شناسه پخش‌کننده H5P"
+
+#: h5pxblock.py:76
+msgid "Unique ID for player instance"
+msgstr "شناسه یکتای نمونه پخش‌کننده"
+
+#: h5pxblock.py:82
+msgid "Display Name"
+msgstr "نام نمایش"
+
+#: h5pxblock.py:83
+msgid "Display name for this module"
+msgstr "نام نمایشی برای این ماژول"
+
+#: h5pxblock.py:89 h5pxblock.py:90
+msgid "Upload H5P content"
+msgstr "بارگذاری محتوای H5P"
+
+#: h5pxblock.py:95
+msgid "Show H5P player frame"
+msgstr "نمایش فریم پخش‌کننده H5P"
+
+#: h5pxblock.py:96
+msgid "whether to show H5P player frame and button"
+msgstr "آیا فریم و دکمه پخش‌کننده H5P نشان داده شود"
+
+#: h5pxblock.py:102
+msgid "Show copyright button"
+msgstr "نمایش دکمه حق نشر"
+
+#: h5pxblock.py:103
+msgid "whether to show copyright button"
+msgstr "آیا دکمه حق نشر نشان داده شود"
+
+#: h5pxblock.py:109
+msgid "Show h5p icon"
+msgstr "نمایش آیکون h5p"
+
+#: h5pxblock.py:110
+msgid "whether to show h5p icon"
+msgstr "آیا آیکون h5p نشان داده شود"
+
+#: h5pxblock.py:116
+msgid "Show fullscreen button"
+msgstr "نمایش دکمه تمام‌صفحه"
+
+#: h5pxblock.py:117
+msgid "whether to show fullscreen button"
+msgstr "آیا دکمه تمام‌صفحه نشان داده شود"
+
+#: h5pxblock.py:123
+msgid "Is Scorable"
+msgstr "قابل نمره‌دهی است"
+
+#: h5pxblock.py:125
+msgid "Select True if this component will save score"
+msgstr "اگر این بخش نمره را ذخیره می‌کند، صحیح را انتخاب کنید"
+
+#: h5pxblock.py:132
+msgid "User content state save frequency"
+msgstr "تناوب ذخیره‌سازی حالت محتوای کاربر"
+
+#: h5pxblock.py:134
+msgid ""
+"How often current user content state should be autosaved (in seconds). Set "
+"it to zero if you don't want to save content state."
+msgstr "چند وقت یک‌بار حالت محتوای کاربر به‌صورت خودکار ذخیره شود (به ثانیه). اگر نمی‌خواهید حالت محتوا ذخیره شود، آن را روی صفر تنظیم کنید."
+
+#: h5pxblock.py:142
+msgid "User previous content interaction states"
+msgstr "حالت‌های تعامل محتوای قبلی کاربر"
+
+#: h5pxblock.py:148
+msgid "Problem Weight"
+msgstr "وزن مسئله"
+
+#: h5pxblock.py:150
+msgid ""
+"Defines the number of points this problem is worth. If the value is not set,"
+" the problem is worth one point."
+msgstr "تعداد امتیازاتی که این مسئله ارزش دارد را تعیین می‌کند. اگر مقدار تنظیم نشود، مسئله یک امتیاز ارزش دارد."
+
+#: h5pxblock.py:159
+msgid "Maximum score"
+msgstr "حداکثر نمره"
+
+#: h5pxblock.py:160
+msgid "Maximum grade score given to assignment by staff."
+msgstr "حداکثر نمره‌ای که توسط کارکنان به تکلیف داده می‌شود."
+
+#: h5pxblock.py:166
+msgid "Problem weighted score"
+msgstr "نمره وزن‌دار مسئله"
+
+#: h5pxblock.py:168
+msgid ""
+"Defines the weighted score of this problem. If the value is not set, the "
+"problem is worth one point."
+msgstr "نمره وزن‌دار این مسئله را تعیین می‌کند. اگر مقدار تنظیم نشود، مسئله یک امتیاز ارزش دارد."
+
+#: h5pxblock.py:176
+msgid "Submission status"
+msgstr "وضعیت ارسال"
+
+#: h5pxblock.py:177
+msgid "The submission status of the assignment."
+msgstr "وضعیت ارسال تکلیف."
+
+#: h5pxblock.py:263
+msgid "Uploading"
+msgstr "در حال بارگذاری"
+
+#: h5pxblock.py:264
+msgid "Uploaded"
+msgstr "بارگذاری شده"
+
+#: h5pxblock.py:265
+msgid "Extracting"
+msgstr "در حال استخراج"
+
+#: static/html/h5pxblock.html:6
+msgid "points"
+msgstr "امتیازات"
+
+#: static/html/h5pxblock.html:10
+msgid "Loading..."
+msgstr "در حال بارگذاری..."
+
+#: static/html/h5pxblock.html:16
+msgid ""
+"The due date for this subsection has passed. Your response will be recorded,"
+" but not graded."
+msgstr "تاریخ موعد این بخش گذشته است. پاسخ شما ثبت خواهد شد، اما نمره‌گذاری نمی‌شود."
+
+#: static/html/h5pxblock.html:21
+msgid "No content. Please upload H5P content."
+msgstr "محتوایی وجود ندارد. لطفاً محتوای H5P بارگذاری کنید."
+
+#: static/html/studio.html:22
+msgid "Currently:"
+msgstr "در حال حاضر:"
+
+#: static/html/studio.html:22
+msgid "Upload time:"
+msgstr "زمان بارگذاری:"
+
+#: static/html/studio.html:27
+msgid "Reuse Existing H5P Content"
+msgstr "استفاده مجدد از محتوای موجود H5P"
+
+#: static/html/studio.html:31
+msgid ""
+"Enter path of existing content or copy path to reuse this content in another"
+" block"
+msgstr "مسیر محتوای موجود را وارد کنید یا مسیر را کپی کنید تا این محتوا در بلاک دیگری استفاده شود"
+
+#: static/html/studio.html:40 static/html/studio.html:57
+#: static/html/studio.html:73 static/html/studio.html:89
+#: static/html/studio.html:105
+msgid "True"
+msgstr "صحیح"
+
+#: static/html/studio.html:40 static/html/studio.html:43
+#: static/html/studio.html:57 static/html/studio.html:60
+#: static/html/studio.html:73 static/html/studio.html:76
+#: static/html/studio.html:89 static/html/studio.html:92
+#: static/html/studio.html:105 static/html/studio.html:108
+msgid "(Default)"
+msgstr "(پیش‌فرض)"
+
+#: static/html/studio.html:43 static/html/studio.html:60
+#: static/html/studio.html:76 static/html/studio.html:92
+#: static/html/studio.html:108
+msgid "False"
+msgstr "غلط"
+
+#: static/html/studio.html:141
+msgid "Save"
+msgstr "ذخیره"
+
+#: static/html/studio.html:144
+msgid "Cancel"
+msgstr "لغو"
