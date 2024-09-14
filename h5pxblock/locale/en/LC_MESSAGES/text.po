@@ -21,121 +21,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: h5pxblock.py:41
-msgid "H5P Player Id"
+#: h5pxblock.py:63
+msgid "Not attempted"
 msgstr ""
 
-#: h5pxblock.py:42
-msgid "Unique ID for player instance"
-msgstr ""
-
-#: h5pxblock.py:48
-msgid "Display Name"
-msgstr ""
-
-#: h5pxblock.py:49
-msgid "Display name for this module"
-msgstr ""
-
-#: h5pxblock.py:55 h5pxblock.py:56
-msgid "Upload H5P content"
-msgstr ""
-
-#: h5pxblock.py:61
-msgid "Show H5P player frame"
-msgstr ""
-
-#: h5pxblock.py:62
-msgid "whether to show H5P player frame and button"
-msgstr ""
-
-#: h5pxblock.py:68
-msgid "Show copyright button"
-msgstr ""
-
-#: h5pxblock.py:69
-msgid "whether to show copyright button"
+#: h5pxblock.py:64
+msgid "Completed"
 msgstr ""
 
 #: h5pxblock.py:75
-msgid "Show h5p icon"
+msgid "H5P Player Id"
 msgstr ""
 
 #: h5pxblock.py:76
-msgid "whether to show h5p icon"
+msgid "Unique ID for player instance"
 msgstr ""
 
 #: h5pxblock.py:82
-msgid "Show fullscreen button"
+msgid "Display Name"
 msgstr ""
 
 #: h5pxblock.py:83
+msgid "Display name for this module"
+msgstr ""
+
+#: h5pxblock.py:89 h5pxblock.py:90
+msgid "Upload H5P content"
+msgstr ""
+
+#: h5pxblock.py:95
+msgid "Show H5P player frame"
+msgstr ""
+
+#: h5pxblock.py:96
+msgid "whether to show H5P player frame and button"
+msgstr ""
+
+#: h5pxblock.py:102
+msgid "Show copyright button"
+msgstr ""
+
+#: h5pxblock.py:103
+msgid "whether to show copyright button"
+msgstr ""
+
+#: h5pxblock.py:109
+msgid "Show h5p icon"
+msgstr ""
+
+#: h5pxblock.py:110
+msgid "whether to show h5p icon"
+msgstr ""
+
+#: h5pxblock.py:116
+msgid "Show fullscreen button"
+msgstr ""
+
+#: h5pxblock.py:117
 msgid "whether to show fullscreen button"
 msgstr ""
 
-#: h5pxblock.py:89
+#: h5pxblock.py:123
 msgid "Is Scorable"
 msgstr ""
 
-#: h5pxblock.py:91
+#: h5pxblock.py:125
 msgid "Select True if this component will save score"
 msgstr ""
 
-#: h5pxblock.py:98
+#: h5pxblock.py:132
 msgid "User content state save frequency"
 msgstr ""
 
-#: h5pxblock.py:100
+#: h5pxblock.py:134
 msgid ""
 "How often current user content state should be autosaved (in seconds). Set "
 "it to zero if you don't want to save content state."
 msgstr ""
 
-#: h5pxblock.py:108
+#: h5pxblock.py:142
 msgid "User previous content interaction states"
 msgstr ""
 
-#: h5pxblock.py:114
+#: h5pxblock.py:148
 msgid "Problem Weight"
 msgstr ""
 
-#: h5pxblock.py:116
+#: h5pxblock.py:150
 msgid ""
-"Defines the number of points this problem is worth. If the value is not set, "
-"the problem is worth one point."
+"Defines the number of points this problem is worth. If the value is not set,"
+" the problem is worth one point."
 msgstr ""
 
-#: h5pxblock.py:125
+#: h5pxblock.py:159
 msgid "Maximum score"
 msgstr ""
 
-#: h5pxblock.py:126
+#: h5pxblock.py:160
 msgid "Maximum grade score given to assignment by staff."
 msgstr ""
 
-#: h5pxblock.py:217
+#: h5pxblock.py:166
+msgid "Problem weighted score"
+msgstr ""
+
+#: h5pxblock.py:168
+msgid ""
+"Defines the weighted score of this problem. If the value is not set, the "
+"problem is worth one point."
+msgstr ""
+
+#: h5pxblock.py:176
+msgid "Submission status"
+msgstr ""
+
+#: h5pxblock.py:177
+msgid "The submission status of the assignment."
+msgstr ""
+
+#: h5pxblock.py:263
 msgid "Uploading"
 msgstr ""
 
-#: h5pxblock.py:218
+#: h5pxblock.py:264
 msgid "Uploaded"
 msgstr ""
 
-#: h5pxblock.py:219
+#: h5pxblock.py:265
 msgid "Extracting"
 msgstr ""
 
-#: static/html/h5pxblock.html:7
+#: static/html/h5pxblock.html:6
+msgid "points"
+msgstr ""
+
+#: static/html/h5pxblock.html:10
 msgid "Loading..."
 msgstr ""
 
-#: static/html/h5pxblock.html:13
+#: static/html/h5pxblock.html:16
 msgid ""
-"The due date for this subsection has passed. Your response will be recorded, "
-"but not graded."
+"The due date for this subsection has passed. Your response will be recorded,"
+" but not graded."
 msgstr ""
 
-#: static/html/h5pxblock.html:18
+#: static/html/h5pxblock.html:21
 msgid "No content. Please upload H5P content."
 msgstr ""
 
@@ -153,8 +183,8 @@ msgstr ""
 
 #: static/html/studio.html:31
 msgid ""
-"Enter path of existing content or copy path to reuse this content in another "
-"block"
+"Enter path of existing content or copy path to reuse this content in another"
+" block"
 msgstr ""
 
 #: static/html/studio.html:40 static/html/studio.html:57
