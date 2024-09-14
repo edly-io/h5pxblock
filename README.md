@@ -41,7 +41,13 @@ on LMS
 
 You can help by translating this project. Follow the steps below:
 
+1. You need `i18n_tool` to "collect" and "compile" translations. If you already have it, proceed to the next item; otherwise:
+
+```bash
+pip install git+https://github.com/openedx/i18n-tools
+```
+
 1. Create a folder for the translations in `locale/`, eg: `locale/es_419/LC_MESSAGES/`, and create your `text.po` file
 with all the translations.
-2. Run `make compile_translations`, this will generate the `text.mo` file.
-3. Create a pull request with your changes.
+1. Run `make compile_translations`, this will generate the `text.mo` file.
+1. Create a pull request with your changes.
