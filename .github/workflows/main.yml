@@ -5,7 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches:
-    - '**'
+      - "**"
 
 jobs:
   cypress-run:
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v5
         id: setup_python
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - name: install dependencies of xblock-sdk
         working-directory: xblock-sdk
         run: |
@@ -38,8 +38,8 @@ jobs:
       - name: Run xblock workbench
         working-directory: xblock-sdk
         env:
-          EXCLUDE_SAMPLE_XBLOCKS: yes           
-        run: |          
+          EXCLUDE_SAMPLE_XBLOCKS: yes
+        run: |
           python3 manage.py migrate --noinput
           python3 ./manage.py runserver &
 
