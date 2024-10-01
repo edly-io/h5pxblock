@@ -183,7 +183,10 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
-        data = importlib_resources.files(__name__).joinpath(path).read_bytes()
+        try:
+            data = importlib_resources.files(__name__).joinpath(path).read_bytes()
+        except TypeError:
+            data = importlib_resources.files(__package__).joinpath(path).read_bytes()
         return data.decode("utf8")
 
     def render_template(self, template_path, context):
