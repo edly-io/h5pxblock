@@ -9,7 +9,7 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: cypress/browsers:latest
     steps:
       - name: Checkout
