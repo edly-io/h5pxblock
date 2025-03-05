@@ -349,7 +349,10 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 unpack_and_upload_on_cloud(
                     h5p_package, H5P_STORAGE, self.cloud_storage_path
                 )
-                self.h5p_content_json_path = H5P_STORAGE.url(self.cloud_storage_path)
+                cloud_storage_path = (
+                    f"{H5P_STORAGE.bucket.name}/" if H5P_STORAGE.custom_domain else ""
+                ) + self.cloud_storage_path
+                self.h5p_content_json_path = H5P_STORAGE.url(cloud_storage_path)
         elif request.params["h5_content_path"]:
             self.h5p_content_json_path = request.params["h5_content_path"]
 
