@@ -445,7 +445,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         """
         if not self.due:
             return False
-        return datetime.now() > self.due
+        return datetime.now(self.due.tzinfo) > self.due
 
     @staticmethod
     def workbench_scenarios():
