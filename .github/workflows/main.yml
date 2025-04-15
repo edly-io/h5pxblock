@@ -13,10 +13,10 @@ jobs:
     container: cypress/browsers:latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Checkout xblock-sdk repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: openedx/xblock-sdk
           path: xblock-sdk
@@ -44,12 +44,12 @@ jobs:
           python3 ./manage.py runserver &
 
       - name: Sleep for 5s to wait for django server getting up and running
-        uses: juliangruber/sleep-action@v1
+        uses: juliangruber/sleep-action@v2
         with:
           time: 5s
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           browser: chrome
           working-directory: tests/cypress
