@@ -51,10 +51,8 @@ function H5PPlayerXBlock(runtime, element, args) {
       const userObj = { name: args.user_full_name, mail: args.user_email };
       const options = {
         h5pJsonPath: args.h5pJsonPath,
-        frameJs:
-          "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/frame.bundle.js",
-        frameCss:
-          "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/styles/h5p.css",
+        frameJs: `${window.H5P_STANDALONE_BASE_URL}/frame.bundle.js`,
+        frameCss: `${window.H5P_STANDALONE_BASE_URL}/styles/h5p.css`,
         frame: args.frame,
         copyright: args.copyright,
         icon: args.icon,
@@ -133,11 +131,8 @@ function loadJS() {
       resolve();
     } else {
       // Load H5PStandalone dynamically using $.getScript
-      $.getScript(
-        "https://cdn.jsdelivr.net/npm/h5p-standalone@3.7.0/dist/main.bundle.js"
-      )
+      $.getScript(`${window.H5P_STANDALONE_BASE_URL}/main.bundle.js`)
         .done(function () {
-          window.H5PStandalone = H5PStandalone;
           resolve();
         })
         .fail(function () {
