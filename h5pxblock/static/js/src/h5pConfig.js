@@ -1,2 +1,5 @@
-window.H5P_STANDALONE_VERSION = "3.8.2";
-window.H5P_STANDALONE_BASE_URL = `https://cdn.jsdelivr.net/npm/h5p-standalone@${window.H5P_STANDALONE_VERSION}/dist`;
+window.H5PStandaloneConfig = {
+  mainBundleUrl: "https://cdn.jsdelivr.net/npm/h5p-standalone@3.8.2/dist/main.bundle.js",
+  frameBundleUrl: "https://cdn.jsdelivr.net/npm/h5p-standalone@3.8.2/dist/frame.bundle.js",
+  frameCssUrl: "https://cdn.jsdelivr.net/npm/h5p-standalone@3.8.2/dist/styles/h5p.css",
+};
