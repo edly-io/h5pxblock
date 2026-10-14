@@ -242,7 +242,11 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
     @property
     def h5p_player_content_url(self):
         """
-        Content URL for the player; cloud content is resolved against the current H5P storage.
+        URL handed to the player at view time.
+
+        Unlike h5p_content_url (the local-FS URL saved at upload), this rebuilds any stored
+        URL containing an "h5pxblockmedia/" key against the current H5P storage, whatever its
+        host, so content survives bucket moves. Other URLs and local-FS content pass through.
         """
         path = self.h5p_content_json_path
         if self.store_content_on_local_fs:
@@ -250,7 +254,6 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
         key = cloud_key_from_url(path)
         if not key:
             return path
-        # The stored URL pins the bucket host at upload time; rebuild it so bucket moves don't break content.
         return H5P_STORAGE.url(key)
 
     def get_context_studio(self):
