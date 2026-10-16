@@ -5,6 +5,7 @@ import concurrent.futures
 import logging
 import os
 import shutil
+from urllib.parse import unquote, urlparse
 from zipfile import ZipFile, is_zipfile
 
 from django.conf import settings
@@ -64,6 +65,22 @@ def get_h5p_storage():
 
     # Priority 3: Fallback to default storage
     return django_default_storage
+
+
+def cloud_key_from_url(url):
+    """
+    Return the "h5pxblockmedia/..." storage key inside an absolute content URL, or None.
+    """
+    if not url or not isinstance(url, str):
+        return None
+    parsed = urlparse(url.strip())
+    if not parsed.scheme or not parsed.netloc:
+        return None
+    path = unquote(parsed.path)
+    idx = path.find("/h5pxblockmedia/")
+    if idx < 0:
+        return None
+    return path[idx + 1:].rstrip("/")
 
 
 def str2bool(val):

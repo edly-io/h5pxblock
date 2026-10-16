@@ -39,6 +39,7 @@ except ModuleNotFoundError:
     from importlib import resources as importlib_resources
 
 from h5pxblock.utils import (
+    cloud_key_from_url,
     get_h5p_storage,
     str2bool,
     unpack_and_upload_on_cloud,
@@ -238,6 +239,23 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
             'h5pxblockmedia', self.get_block_path_prefix
         )
 
+    @property
+    def h5p_player_content_url(self):
+        """
+        URL handed to the player at view time.
+
+        Unlike h5p_content_url (the local-FS URL saved at upload), this rebuilds any stored
+        URL containing an "h5pxblockmedia/" key against the current H5P storage, whatever its
+        host, so content survives bucket moves. Other URLs and local-FS content pass through.
+        """
+        path = self.h5p_content_json_path
+        if self.store_content_on_local_fs:
+            return path
+        key = cloud_key_from_url(path)
+        if not key:
+            return path
+        return H5P_STORAGE.url(key)
+
     def get_context_studio(self):
         return {
             "field_display_name": self.fields["display_name"],
@@ -299,7 +317,7 @@ class H5PPlayerXBlock(XBlock, CompletableXBlockMixin):
                 "user_email": user.emails[0],
                 "userData": self.interaction_data,
                 "customJsPath": self.runtime.local_resource_url(self, "public/js/h5pcustom.js"),
-                "h5pJsonPath": self.h5p_content_json_path
+                "h5pJsonPath": self.h5p_player_content_url
             }
         )
         return frag
