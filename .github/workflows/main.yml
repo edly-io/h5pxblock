@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: openedx/xblock-sdk
+          # Pinned: xblock-sdk #519 (0e6c053) dropped requirements/*.txt used below.
+          ref: c7effa8d918c4b617542a43d17fd77fa1ddf2cff
           path: xblock-sdk
       - uses: actions/setup-python@v5
         id: setup_python
